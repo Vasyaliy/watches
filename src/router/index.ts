@@ -8,15 +8,61 @@ const routes: Array<RouteConfig> = [
   {
     path: '/',
     name: 'Home',
-    component: Home
-  },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    component: Home,
+    children: [
+      {
+        path: '/',
+        name: 'content',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "user" */ '../components/HomeContent.vue')
+      },
+
+      {
+        path: '/user',
+        name: 'user',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "user" */ '../User/Index.vue')
+      },
+
+      {
+        path: '/auth',
+        name: 'auth',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "user" */ '../Auth/Index.vue')
+      },
+
+      {
+        path: '/list',
+        name: 'list',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "user" */ '../Products/List/Index.vue')
+      },
+
+      {
+        path: '/list/:productId',
+        name: 'product',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "user" */ '../Products/Product/Index.vue')
+      },
+      {
+        path: '/newProduct',
+        name: 'product',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "user" */ '../Products/Product/New.vue')
+      }
+    ]
   }
 ]
 

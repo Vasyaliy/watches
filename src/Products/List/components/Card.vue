@@ -1,0 +1,60 @@
+<template>
+  <v-card
+    dark
+    elevation="5"
+    color="rgb(40, 40, 40)"
+    class="main align-center"
+    style="height: 400px;"
+  >
+    <v-img
+      style="width: 228px; height: 228px; object-fit: cover;"
+      :src="item.image"
+    />
+    <v-card-text>
+      <p style="text-align: center;"> {{ item.name }} </p>
+      <p style="text-align: center;"> {{ item.price }} </p>
+    </v-card-text>
+    <v-btn
+      style="width: 100%; margin-bottom: 10px; position: absolute; bottom: 15px;"
+      @click="open"
+      color="rgb(30, 30, 30)"
+    >
+      Открыть
+    </v-btn>
+  </v-card>
+</template>
+
+<script lang="ts">
+import Vue from 'vue'
+export default Vue.extend({
+  props: {
+    item: {
+      type: Object
+    }
+  },
+
+  data () {
+    return {
+    }
+  },
+
+  methods: {
+    open () {
+      // @ts-ignore
+      this.$emit('open', this.item.id)
+    }
+  }
+})
+</script>
+
+<style lang="scss" scoped>
+
+.main {
+  margin: 10px;
+  color: white;
+  // padding: 20px;
+
+  // height: 391px;
+  width: 230px;
+}
+</style>

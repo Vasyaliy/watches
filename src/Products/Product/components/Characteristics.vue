@@ -24,7 +24,14 @@
             v-model="dialogm1"
             column
           >
-            <v-text-field
+            <v-select
+              label="циферблат"
+              v-model="dialName.chosenId"
+              :items="dialName.options"
+              item-text="name"
+              item-value="id"
+            />
+            <!-- <v-text-field
               label="Bahamas, The"
               value="bahamas"
             ></v-text-field>
@@ -32,70 +39,7 @@
               label="Bahrain"
               value="bahrain"
             ></v-text-field>
-            <v-text-field
-              label="Bangladesh"
-              value="bangladesh"
-            ></v-text-field>
-            <v-text-field
-              label="Barbados"
-              value="barbados"
-            ></v-text-field>
-            <v-text-field
-              label="Belarus"
-              value="belarus"
-            ></v-text-field>
-            <v-text-field
-              label="Belgium"
-              value="belgium"
-            ></v-text-field>
-            <v-text-field
-              label="Belize"
-              value="belize"
-            ></v-text-field>
-            <v-text-field
-              label="Benin"
-              value="benin"
-            ></v-text-field>
-            <v-text-field
-              label="Bhutan"
-              value="bhutan"
-            ></v-text-field>
-            <v-text-field
-              label="Bolivia"
-              value="bolivia"
-            ></v-text-field>
-            <v-text-field
-              label="Bosnia and Herzegovina"
-              value="bosnia"
-            ></v-text-field>
-            <v-text-field
-              label="Botswana"
-              value="botswana"
-            ></v-text-field>
-            <v-text-field
-              label="Brazil"
-              value="brazil"
-            ></v-text-field>
-            <v-text-field
-              label="Brunei"
-              value="brunei"
-            ></v-text-field>
-            <v-text-field
-              label="Bulgaria"
-              value="bulgaria"
-            ></v-text-field>
-            <v-text-field
-              label="Burkina Faso"
-              value="burkina"
-            ></v-text-field>
-            <v-text-field
-              label="Burma"
-              value="burma"
-            ></v-text-field>
-            <v-text-field
-              label="Burundi"
-              value="burundi"
-            ></v-text-field>
+            ></v-text-field> -->
           </v-item-group>
         </v-card-text>
         <v-divider></v-divider>
@@ -110,10 +54,16 @@
           <v-btn
             color="blue darken-1"
             text
-            @click="dialog = false"
+             @click="dialog = false"
           >
             Save
           </v-btn>
+          <v-btn
+            outlined
+            @click="postCgaracteristic()"
+          >
+            POST
+        </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -121,12 +71,35 @@
 </template>
 
 <script lang="ts">
+import axios from 'axios'
 import Vue from 'vue'
+
 export default Vue.extend({
   data () {
     return {
       dialogm1: '',
-      dialog: false
+      dialog: false,
+      dialName: {
+        options: [
+          { name: 'металл', id: 1 },
+          { name: 'gerww', id: 2 },
+          { name: 'afaf', id: 3 }
+        ],
+        chosenId: 0
+      }
+    }
+  },
+  methods: {
+    async postCgaracteristic () {
+      console.log(document.cookie)
+      axios({
+        method: 'POST',
+        url: 'http://127.0.0.1:8000/watch/api/product_post/',
+        data: this.dialName.chosenId,
+        headers: {
+          Authorization: document.cookie
+        }
+      })
     }
   }
 })

@@ -221,7 +221,7 @@ export default Vue.extend({
 
 .input-file {
   position: absolute;
-  z-index: 1000;
+  // z-index: 1000;
   opacity: 0;
   top: 0px;
   left: 0px;

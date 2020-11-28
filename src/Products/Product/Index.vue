@@ -58,7 +58,7 @@
             <h2> {{ product.name }} </h2>
             <span style="font-weight: bold; font-size: 30px;">Цена {{ product.price }} </span>
             <v-btn large color="black" style="width: 100%"> КУПИТЬ </v-btn>
-            <div><p style="font-weight: bold;">Описание:</p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque, suscipit optio. Facilis error officiis mollitia est reprehenderit amet, eaque fugiat sed soluta repellendus dolore, illum ipsam. Nostrum sed ipsa adipisci. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam, quod! Dicta amet mollitia iure deserunt, dolor hic blanditiis eligendi culpa enim dolores aut, laborum, quos esse. Rem eos laboriosam perspiciatis.</div>
+            <div><p style="font-weight: bold;">Описание:</p> {{ product.description }}</div>
             <!-- <div style="width: 100%"><span style="font-weight: bold;"> Состояние </span> Новые</div> -->
           </div>
           <div style="margin-top: 20px">

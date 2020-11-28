@@ -1,4 +1,5 @@
 import { productsMock } from './productsMock'
+import axios from 'axios'
 
 export interface Product {
   image: string;
@@ -12,12 +13,14 @@ export interface Product {
 }
 
 export class Products {
-  list: Product[]
+  list: any
   currentProduct: Product | undefined
+  loading: boolean
 
   constructor () {
     this.list = productsMock
     this.currentProduct = undefined
+    this.loading = false
   }
 
   static conditions = [
@@ -63,7 +66,24 @@ export class Products {
     }
   }
 
+  fetchProducts = () => {
+    this.loading = true
+    axios
+      .get('http://127.0.0.1:8000/watch/api/product_get/?format=json')
+      .catch(console.log)
+      .then(response => {
+        console.log(response)
+        // @ts-ignore
+        this.list = response.data
+        this.loading = false
+      })
+      .finally(() => {
+        this.loading = false
+      })
+  }
+
   getProduct = (productId: number) => {
+    // @ts-ignore
     this.currentProduct = this.list.find(({ id }) => id === productId)
   }
 
@@ -73,3 +93,4 @@ export class Products {
 }
 
 export const products = new Products()
+products.fetchProducts()

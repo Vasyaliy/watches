@@ -60,6 +60,7 @@
 import Vue from 'vue'
 import Card from './components/Card.vue'
 import { products, Product } from '../Products'
+import axios from 'axios'
 
 interface Filter {
   [key: string]: {
@@ -69,6 +70,7 @@ interface Filter {
   };
 }
 
+const brandNames = ['Rolex']
 const filterParams: Filter = {
   brand: {
     value: [],
@@ -117,6 +119,7 @@ export default Vue.extend({
 
   computed: {
     filteredList () {
+      // @ts-ignore
       const list = products.list.filter(product => {
         return Object.keys(this.$route.query).every(param => {
           return filterParams[param].filter(product)
@@ -136,7 +139,8 @@ export default Vue.extend({
       products,
       brands,
       price: 500000,
-      filterParams
+      filterParams,
+      loading: false
     }
   },
 

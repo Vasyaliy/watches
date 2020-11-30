@@ -90,16 +90,20 @@ export default Vue.extend({
     }
   },
   methods: {
-    async postCgaracteristic () {
+    postCgaracteristic () {
       console.log(document.cookie)
-      axios({
-        method: 'POST',
-        url: 'http://127.0.0.1:8000/watch/api/product_post/',
-        data: this.dialName.chosenId,
-        headers: {
-          Authorization: document.cookie
-        }
-      })
+      axios
+        .post('http://127.0.0.1:8000/product/create/',
+          {
+            name: 'test',
+            user: 1,
+            price: this.dialName.chosenId
+          }
+        )
+        .then(res => {
+          console.log(res.data)
+        })
+        .catch((error) => console.log(error.response.request._response))
     }
   }
 })

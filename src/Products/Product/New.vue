@@ -84,6 +84,12 @@
             class="product-desc"
             style="width: 100%;"
           >
+          <v-btn
+            outlined
+            @click="postImgs()"
+          >
+            POST
+        </v-btn>
             <!-- <h2> {{ product.name }} </h2> -->
             <div style="width: 100%">
               <v-combobox
@@ -160,6 +166,7 @@
 </template>
 
 <script lang="ts">
+import Axios from 'axios'
 import Vue from 'vue'
 import { Products } from '../Products'
 import Characteristics from './components/Characteristics.vue'
@@ -188,6 +195,26 @@ export default Vue.extend({
 
     change (number: number) {
       this.imageNumber = number
+    },
+
+    postImgs () {
+      console.log(this.product.images[0])
+      Axios
+        .post('http://127.0.0.1:8000/product/images/create/',
+          {
+            post: 1,
+            image: this.product.images[0]
+          },
+          {
+            headers: {
+              Authorization: 'token db5f91a86c00f33e3b89201ce04ca2118a4968af'
+            }
+          }
+        )
+        .then(res => {
+          console.log(res.data)
+        })
+        .catch((error) => console.log(error.response.request._response))
     },
 
     attachFile (files: FileList) {

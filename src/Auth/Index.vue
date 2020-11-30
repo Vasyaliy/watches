@@ -24,11 +24,12 @@
         </v-btn>
       </v-card-actions>
       <v-card-text>
-        <sign-in-form v-if="tab === 'auth'"></sign-in-form>
+        <sign-in-form @sendLoginInfo="getLoginInfo" v-if="tab === 'auth'"></sign-in-form>
         <registration v-if="tab === 'registration'"></registration>
       </v-card-text>
       <v-card-actions>
-        <v-btn  class="form__button" color="#363636" block rounded>Далее</v-btn>
+          {{email}}
+        <v-btn  @click="postLoginInfo" class="form__button" color="#363636" block rounded>Далее</v-btn>
       </v-card-actions>
     </v-card>
   </div>
@@ -37,6 +38,7 @@
 import Vue from 'vue'
 import SignInForm from './Components/SignInForm.vue'
 import Registration from './Components/Registration.vue'
+import axios from 'axios'
 
 export default Vue.extend({
   name: 'signInPage',
@@ -54,6 +56,22 @@ export default Vue.extend({
   methods: {
     toLoading () {
       console.log('sada')
+    },
+
+    getLoginInfo (data: any) {
+      this.email = data.login
+      this.password = data.pass
+    },
+
+    postLoginInfo () {
+      axios
+        .post('http://localhost:8000/api/v1/auth_token/token/login/',
+          {
+            username: this.email,
+            password: this.password
+          }
+        )
+        .then(res => console.log(res.data))
     }
   }
 })

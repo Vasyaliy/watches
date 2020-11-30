@@ -69,7 +69,13 @@ export class Products {
   fetchProducts = () => {
     this.loading = true
     axios
-      .get('http://127.0.0.1:8000/watch/api/product_get/?format=json')
+      .get('http://127.0.0.1:8000/watch/api/product_get/?format=json',
+        {
+          headers: {
+            Authorization: 'token db5f91a86c00f33e3b89201ce04ca2118a4968af'
+          }
+        }
+      )
       .catch(console.log)
       .then(response => {
         console.log(response)

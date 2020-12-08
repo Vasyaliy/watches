@@ -6,9 +6,10 @@
     >
       <v-slide-item
         v-for="(image, index) in images"
-        :key="image"
+        :key="image + index"
         style="padding: 10px; margin-left: 10px;"
       >
+    <div v-if="images.length > 1">
         <v-img @click="change(index)" :style="`width: 100px; opacity: ${localIndex === index ? '1' : '0.5'}`" :src="image"/>
         <!-- <v-card
           :color="active ? 'primary' : 'grey lighten-1'"
@@ -29,6 +30,7 @@
             </v-scale-transition>
           </v-row>
         </v-card> -->
+    </div>
       </v-slide-item>
     </v-slide-group>
 

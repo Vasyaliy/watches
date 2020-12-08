@@ -73,6 +73,7 @@ import Vue from 'vue'
 import Manufactorers from './Manufactorers.vue'
 import Gurantee from './Gurantee.vue'
 import Axios from 'axios'
+import { getCookie } from '../Products/Products'
 
 export default Vue.extend({
 
@@ -96,7 +97,7 @@ export default Vue.extend({
       .get('http://127.0.0.1:8000/api/v1/auth/users/me/',
         {
           headers: {
-            Authorization: 'token db5f91a86c00f33e3b89201ce04ca2118a4968af'
+            Authorization: `token ${getCookie('access_token')}`
           }
         }
       )

@@ -14,7 +14,7 @@
           multiple
           name="image"
           class="input-file"
-          @change="attachFile($event.target.files)"
+          @change="onFileSelected($event.target.files)"
         >
         <v-btn color="black" style="width: 100%">
           Загрузить
@@ -47,8 +47,9 @@
             type="file"
             multiple
             name="image"
+            ref="image"
             class="input-file"
-            @change="attachFile($event.target.files)"
+            @change="onFileSelected"
           >
         </div>
         <div v-if="product.images.length > 0" style="width: 450px;">
@@ -90,7 +91,6 @@
           >
             POST
         </v-btn>
-            <!-- <h2> {{ product.name }} </h2> -->
             <div style="width: 100%">
               <v-combobox
                 v-model="product.brand"
@@ -121,54 +121,26 @@
                 filled
                 v-model="product.description"
               />
-              <characteristics/>
+              <characteristics @saveCharacteristc="getCharacteristicFromChild()"/>
             </div>
               <v-btn
                 width="100%"
                 color="black"
                 style="margin-top: 20px;"
+                @click="postCharacterisic()"
               > Создать </v-btn>
-            <!-- <div style="width: 100%"><span style="font-weight: bold;"> Состояние </span> Новые</div> -->
           </div>
-          <!-- <div style="margin-top: 20px">
-            <v-expansion-panels style="width: 100%;">
-              <v-expansion-panel
-              >
-                <v-expansion-panel-header>
-                  Характеристики
-                </v-expansion-panel-header>
-                <v-expansion-panel-content>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque, suscipit optio. Facilis error officiis mollitia est reprehenderit amet, eaque fugiat sed soluta repellendus dolore, illum ipsam. Nostrum sed ipsa adipisci.
-                </v-expansion-panel-content>
-              </v-expansion-panel>
-            </v-expansion-panels>
-          </div> -->
         </div>
       </div>
     </v-card-text>
-    <!-- <v-img
-      style="width: 228px; height: 228px; object-fit: cover;"
-      :src="product.image"
-    />
-    <v-card-text>
-      <p style="text-align: center;"> {{ product.name }} </p>
-      <p style="text-align: center;"> {{ product.price }} </p>
-    </v-card-text>
-    <v-btn
-      style="width: 100%; margin-bottom: 10px; position: absolute; bottom: 15px;"
-      @click="open"
-      color="rgb(30, 30, 30)"
-    >
-      Открыть
-    </v-btn> -->
+
   </v-card>
 </template>
 
 <script lang="ts">
-import Axios from 'axios'
+import axios from 'axios'
 import Vue from 'vue'
-import { Products } from '../Products'
+import { Products, getCookie, products } from '../Products'
 import Characteristics from './components/Characteristics.vue'
 import Gallery from './Gallery.vue'
 
@@ -178,7 +150,8 @@ export default Vue.extend({
     return {
       Products,
       product: Products.getIntial(),
-      imageNumber: 0
+      imageNumber: 0,
+      selectedFiles: [] as Array<any>
     }
   },
 
@@ -188,26 +161,59 @@ export default Vue.extend({
   },
 
   methods: {
-    open () {
-      // @ts-ignore
-      this.$loading.value = !this.$loading.value
-    },
-
     change (number: number) {
       this.imageNumber = number
     },
-
+    getCharacteristicFromChild (data: any) {
+      console.log(data)
+    },
+    onFileSelected (event: any) {
+      this.selectedFiles = event.target.files
+      console.log(this.selectedFiles)
+      for (let i = 0; i < this.selectedFiles.length; i++) {
+        const reader = new FileReader()
+        reader.onload = (e) => {
+          if (e.target) {
+            const photo = reader.result as string
+            this.product.images.push(photo)
+          }
+        }
+        reader.readAsDataURL(this.selectedFiles[i])
+      }
+    },
     postImgs () {
-      console.log(this.product.images[0])
-      Axios
-        .post('http://127.0.0.1:8000/product/images/create/',
+      const fd = new FormData()
+      for (let i = 0; i < this.selectedFiles.length; i++) {
+        fd.append('ad', '1')
+        fd.append('image', this.selectedFiles[i], this.selectedFiles[i].name)
+        console.log(fd)
+        axios
+          .post('http://127.0.0.1:8000/watch/api/images/',
+            fd,
+            {
+              headers: {
+                Authorization: `token ${getCookie('access_token')}`,
+                'Content-Type': 'multipart/form-data'
+              }
+            }
+          )
+          .then(res => {
+            // console.log(res.data)
+          })
+          .catch((error) => console.log(error.response.request._response))
+      }
+    },
+    postCharacteristic () {
+      axios
+        .post('http://127.0.0.1:8000/product/create/',
           {
-            post: 1,
-            image: this.product.images[0]
+            name: 'test',
+            user: 1,
+            price: 100
           },
           {
             headers: {
-              Authorization: 'token db5f91a86c00f33e3b89201ce04ca2118a4968af'
+              Authorization: `token ${getCookie('access_token')}`
             }
           }
         )
@@ -215,21 +221,6 @@ export default Vue.extend({
           console.log(res.data)
         })
         .catch((error) => console.log(error.response.request._response))
-    },
-
-    attachFile (files: FileList) {
-      console.log('dads')
-      if (files) {
-        for (let i = 0; i < files.length; i++) {
-          console.log(i)
-          const reader = new FileReader()
-          reader.onload = () => {
-            const photo = reader.result as string
-            this.product.images.push(photo)
-          }
-          if (files[i]) reader.readAsDataURL(files[i])
-        }
-      }
     }
   }
 })

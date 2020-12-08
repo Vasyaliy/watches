@@ -21,27 +21,20 @@
         <v-divider></v-divider>
         <v-card-text style="height: 300px;">
           <v-item-group
-            v-model="dialogm1"
+            v-for="(field, index) in characteristicKeys"
+            :key="field + index"
             column
           >
+          {{selectors[field]}}
             <v-select
-              label="циферблат"
-              v-model="dialName.chosenId"
-              :items="dialName.options"
+              :label="field"
+              v-model="characteristics.field"
+              :items="selectors[field]"
               item-text="name"
               item-value="id"
             />
-            <!-- <v-text-field
-              label="Bahamas, The"
-              value="bahamas"
-            ></v-text-field>
-            <v-text-field
-              label="Bahrain"
-              value="bahrain"
-            ></v-text-field>
-            ></v-text-field> -->
-          </v-item-group>
-        </v-card-text>
+           </v-item-group>
+          </v-card-text>
         <v-divider></v-divider>
         <v-card-actions>
           <v-btn
@@ -54,13 +47,12 @@
           <v-btn
             color="blue darken-1"
             text
-             @click="dialog = false"
+            @click="postCharacteristic()"
           >
             Save
           </v-btn>
           <v-btn
             outlined
-            @click="postCgaracteristic()"
           >
             POST
         </v-btn>
@@ -73,38 +65,50 @@
 <script lang="ts">
 import axios from 'axios'
 import Vue from 'vue'
-
+import { getCookie } from '../../Products'
 export default Vue.extend({
   data () {
     return {
       dialogm1: '',
       dialog: false,
+      selectors: {} as any,
+      characteristics: {} as any,
+      characteristicKeys: [] as Array<any>,
       dialName: {
+        name: 'циферблат',
         options: [
-          { name: 'металл', id: 1 },
+          { name: 'mettal', id: 1 },
           { name: 'gerww', id: 2 },
           { name: 'afaf', id: 3 }
         ],
-        chosenId: 0
+        chosenId: 1
       }
     }
   },
   methods: {
-    postCgaracteristic () {
-      console.log(document.cookie)
-      axios
-        .post('http://127.0.0.1:8000/product/create/',
-          {
-            name: 'test',
-            user: 1,
-            price: this.dialName.chosenId
-          }
-        )
-        .then(res => {
-          console.log(res.data)
-        })
-        .catch((error) => console.log(error.response.request._response))
+    postCharacteristic () {
+      this.dialog = false
+      this.$emit('saveCharacteristic', this.characteristics)
     }
+  },
+  mounted () {
+    axios
+      .get('http://127.0.0.1:8000/product/properties/',
+        {
+          headers: {
+            Authorization: `token ${getCookie('access_token')}`,
+            'Content-Type': 'multipart/form-data'
+          }
+        })
+      .then(res => {
+        console.log(res.data)
+        this.selectors = res.data
+        this.characteristicKeys = Object.keys(this.selectors)
+        this.characteristicKeys.forEach(key => {
+          this.characteristics[key] = null
+        })
+        console.log(this.characteristics)
+      })
   }
 })
 </script>

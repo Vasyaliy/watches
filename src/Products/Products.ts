@@ -12,6 +12,12 @@ export interface Product {
   id?: number;
 }
 
+export function getCookie (coockieName: string) {
+  const results = document.cookie.match('(^|;) ?' + `${coockieName}` + '=([^;]*)(;|$)')
+  if (results) return unescape(results[2])
+  else return null
+}
+
 export class Products {
   list: any
   currentProduct: Product | undefined
@@ -69,19 +75,13 @@ export class Products {
   fetchProducts = () => {
     this.loading = true
     axios
-      .get('http://127.0.0.1:8000/watch/api/product_get/?format=json',
-        {
-          headers: {
-            Authorization: 'token db5f91a86c00f33e3b89201ce04ca2118a4968af'
-          }
-        }
-      )
+      .get('http://127.0.0.1:8000/watch/api/product_get/?format=json')
       .catch(console.log)
       .then(response => {
-        console.log(response)
+        // @ts-ignore
+        console.log(response.data)
         // @ts-ignore
         this.list = response.data
-        this.loading = false
       })
       .finally(() => {
         this.loading = false

@@ -143,6 +143,9 @@ export default Vue.extend({
       loading: false
     }
   },
+  mounted () {
+    console.log(this.products.list)
+  },
 
   methods: {
     open (id: number) {

@@ -106,6 +106,12 @@
                   filled
                   v-model="product.price"
                 />
+                 <v-text-field
+                  style="margin-right: 5px"
+                  label="Имя"
+                  filled
+                  v-model="product.name"
+                />
                 <v-select
                   style="margin-left: 5px"
                   :items="Products.conditions"
@@ -121,13 +127,13 @@
                 filled
                 v-model="product.description"
               />
-              <characteristics @saveCharacteristc="getCharacteristicFromChild()"/>
+              <characteristics @saveCharacteristic="getCharacteristicFromChild"/>
             </div>
               <v-btn
                 width="100%"
                 color="black"
                 style="margin-top: 20px;"
-                @click="postCharacterisic()"
+                @click="postCharacteristic()"
               > Создать </v-btn>
           </div>
         </div>
@@ -151,7 +157,9 @@ export default Vue.extend({
       Products,
       product: Products.getIntial(),
       imageNumber: 0,
-      selectedFiles: [] as Array<any>
+      selectedFiles: [] as Array<any>,
+      finalProduct: {}
+
     }
   },
 
@@ -165,7 +173,7 @@ export default Vue.extend({
       this.imageNumber = number
     },
     getCharacteristicFromChild (data: any) {
-      console.log(data)
+      this.product.charachteristics = data
     },
     onFileSelected (event: any) {
       this.selectedFiles = event.target.files
@@ -181,10 +189,10 @@ export default Vue.extend({
         reader.readAsDataURL(this.selectedFiles[i])
       }
     },
-    postImgs () {
+    postImgs (id: number) {
       const fd = new FormData()
       for (let i = 0; i < this.selectedFiles.length; i++) {
-        fd.append('ad', '1')
+        fd.append('ad', `${id}`)
         fd.append('image', this.selectedFiles[i], this.selectedFiles[i].name)
         console.log(fd)
         axios
@@ -204,13 +212,10 @@ export default Vue.extend({
       }
     },
     postCharacteristic () {
+      console.log(this.product)
       axios
         .post('http://127.0.0.1:8000/product/create/',
-          {
-            name: 'test',
-            user: 1,
-            price: 100
-          },
+          this.product,
           {
             headers: {
               Authorization: `token ${getCookie('access_token')}`
@@ -218,7 +223,8 @@ export default Vue.extend({
           }
         )
         .then(res => {
-          console.log(res.data)
+          this.product.image = res.data.id
+          this.postImgs(res.data.id)
         })
         .catch((error) => console.log(error.response.request._response))
     }

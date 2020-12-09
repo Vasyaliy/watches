@@ -25,10 +25,9 @@
             :key="field + index"
             column
           >
-          {{selectors[field]}}
             <v-select
               :label="field"
-              v-model="characteristics.field"
+              v-model="characteristics[field]"
               :items="selectors[field]"
               item-text="name"
               item-value="id"
@@ -101,14 +100,20 @@ export default Vue.extend({
           }
         })
       .then(res => {
-        console.log(res.data)
         this.selectors = res.data
         this.characteristicKeys = Object.keys(this.selectors)
         this.characteristicKeys.forEach(key => {
           this.characteristics[key] = null
         })
-        console.log(this.characteristics)
       })
+    axios
+      .get('http://127.0.0.1:8000/product/properties/',
+        {
+          headers: {
+            Authorization: `token ${getCookie('access_token')}`,
+            'Content-Type': 'multipart/form-data'
+          }
+        })
   }
 })
 </script>

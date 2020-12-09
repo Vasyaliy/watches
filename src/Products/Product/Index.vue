@@ -31,7 +31,7 @@
           </v-carousel>
           <Gallery
             :currentIndex="imageNumber"
-            :images="product.images"
+            :images="images"
             @change="change"
           />
         </div>
@@ -87,25 +87,38 @@
 </template>
 
 <script lang="ts">
+import axios from 'axios'
 import Vue from 'vue'
-import { products } from '../Products'
+import { products, getCookie } from '../Products'
 import Gallery from './Gallery.vue'
 
 export default Vue.extend({
-
+  components: {
+    Gallery
+  },
   data () {
     return {
       product: products.currentProduct,
       productProperties: [] as Array<string>,
-      imageNumber: 0 as number
+      imageNumber: 0 as number,
+      images: [''] as Array<string>
     }
   },
   mounted () {
     // @ts-ignore
     this.productProperties = Object.keys(this.product)
-  },
-  components: {
-    Gallery
+    axios
+      .get(`http://localhost:8000/watch/api/images/${this.product?.id}`,
+        {
+          headers: {
+            Authorization: `token ${getCookie('access_token')}`,
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      )
+      .then(res => {
+        this.images = res.data.image
+      })
   },
 
   beforeCreate () {

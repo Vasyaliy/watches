@@ -2,13 +2,14 @@ import { productsMock } from './productsMock'
 import axios from 'axios'
 
 export interface Product {
-  image: string;
+  image: number;
   name: string;
   price: string;
+  user: number;
   description?: string;
   images: string[];
   charachteristics?: {[key: string]: string};
-  brand: string;
+  brand: number;
   id?: number;
 }
 
@@ -61,8 +62,9 @@ export class Products {
   static getIntial (): Product {
     return {
       name: '',
-      image: '',
-      brand: '',
+      user: 1,
+      image: 0,
+      brand: 1,
       images: [],
       description: '',
       price: '',

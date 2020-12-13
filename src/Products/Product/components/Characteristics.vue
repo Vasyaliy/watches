@@ -106,14 +106,6 @@ export default Vue.extend({
           this.characteristics[key] = null
         })
       })
-    axios
-      .get('http://127.0.0.1:8000/product/properties/',
-        {
-          headers: {
-            Authorization: `token ${getCookie('access_token')}`,
-            'Content-Type': 'multipart/form-data'
-          }
-        })
   }
 })
 </script>

@@ -23,20 +23,6 @@
     </v-card-title>
     <v-card-text>
       <div style="display: flex; justify-content: space-between; padding: 10px;">
-        <!-- <div
-          class=""
-          style="height: 450px; overflow: hidden"
-        >
-          <div v-for="(image, i) in product.images"
-            :key="i"
-          >
-            <img
-              @click="imageNumber = i"
-              :src="image"
-              style="object-fit: contain; height: 120px; margin-bottom: 5px;"
-            >
-          </div>
-        </div> -->
         <div
           class="align-center file-placeholder"
           v-if="product.images.length === 0"
@@ -71,7 +57,6 @@
                   style="object-fit: contain; width: 100%; height: 100%;"
                 >
               </v-zoomer>
-              <!-- <img style="object-fit: cover; margin: auto;" width="300" height="400" :src="image"> -->
             </v-carousel-item>
           </v-carousel>
           <Gallery
@@ -85,20 +70,20 @@
             class="product-desc"
             style="width: 100%;"
           >
-          <v-btn
-            outlined
-            @click="postImgs()"
-          >
-            POST
-        </v-btn>
             <div style="width: 100%">
               <v-combobox
                 v-model="product.brand"
-                :items="Products.brands"
+                :items="Products.brands.name"
                 filled
                 label="Марка"
                 dense
               ></v-combobox>
+               <v-text-field
+                style="margin-right: 5px"
+                label="Имя"
+                filled
+                v-model="product.name"
+              />
               <div style="display: flex;">
                 <v-text-field
                   style="margin-right: 5px"
@@ -106,18 +91,12 @@
                   filled
                   v-model="product.price"
                 />
-                 <v-text-field
-                  style="margin-right: 5px"
-                  label="Имя"
-                  filled
-                  v-model="product.name"
-                />
                 <v-select
                   style="margin-left: 5px"
                   :items="Products.conditions"
                   label="Состояние"
                   filled
-                  v-model.number="product.price"
+                  v-model.number="product.conditions"
                 />
               </div>
               <v-textarea
@@ -190,8 +169,9 @@ export default Vue.extend({
       }
     },
     postImgs (id: number) {
-      const fd = new FormData()
+      console.log(this.selectedFiles.length)
       for (let i = 0; i < this.selectedFiles.length; i++) {
+        const fd = new FormData()
         fd.append('ad', `${id}`)
         fd.append('image', this.selectedFiles[i], this.selectedFiles[i].name)
         console.log(fd)
@@ -237,6 +217,7 @@ export default Vue.extend({
 .main {
   // margin: 10px;
   color: white;
+  height: 85%
   // padding: 20px;
 
   // height: 391px;

@@ -8,7 +8,7 @@
   >
     <v-img
       style="width: 228px; height: 228px; object-fit: cover;"
-      :src="item.image"
+      :src="image"
     />
     <v-card-text>
       <p style="text-align: center;"> {{ item.name }} </p>
@@ -25,7 +25,9 @@
 </template>
 
 <script lang="ts">
+import axios from 'axios'
 import Vue from 'vue'
+import { getCookie } from '../../Products'
 export default Vue.extend({
   props: {
     item: {
@@ -35,6 +37,7 @@ export default Vue.extend({
 
   data () {
     return {
+      image: '' as string
     }
   },
 
@@ -43,6 +46,21 @@ export default Vue.extend({
       // @ts-ignore
       this.$emit('open', this.item.id)
     }
+  },
+  created () {
+    console.log(this.item.id)
+    axios.get(`http://localhost:8000/watch/api/images/?ad=${this.item.id}`,
+      {
+        headers: {
+          Authorization: `token ${getCookie('access_token')}`,
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      .then(res => {
+        console.log(res.data)
+        this.image = res.data[0].image
+      })
+      .catch(console.log)
   }
 })
 </script>

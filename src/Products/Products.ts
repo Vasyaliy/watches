@@ -1,6 +1,10 @@
 import { productsMock } from './productsMock'
 import axios from 'axios'
 
+interface Brand {
+  id: number;
+  name: string;
+}
 export interface Product {
   image: number;
   name: string;
@@ -9,7 +13,7 @@ export interface Product {
   description?: string;
   images: string[];
   charachteristics?: {[key: string]: string};
-  brand: number;
+  brand: Brand;
   id?: number;
 }
 
@@ -38,25 +42,14 @@ export class Products {
   ]
 
   static brands = [
-    'Omega',
-    'Rolex',
-    'Omega1',
-    'Rolex1',
-    'Omega2',
-    'Rolex2',
-    'Omega3',
-    'Rolex4',
-    'Omega4',
-    'Rolex5',
-    'Omega5',
-    'Rolex6',
-    'Omega6',
-    'Rolex7',
-    'Omega7',
-    'Rolex8',
-    'Omega8',
-    'Rolex9',
-    'Omega9'
+    {
+      id: 1,
+      name: 'Rolex'
+    },
+    {
+      id: 2,
+      name: 'Omega'
+    }
   ]
 
   static getIntial (): Product {
@@ -64,7 +57,10 @@ export class Products {
       name: '',
       user: 1,
       image: 0,
-      brand: 1,
+      brand: {
+        name: 'default',
+        id: 1
+      },
       images: [],
       description: '',
       price: '',

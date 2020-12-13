@@ -82,7 +82,7 @@ const filterParams: Filter = {
     filter (product: Product) {
       const arr = this.value as string[]
       if (arr.length === 0) return true
-      return arr.some(brand => brand.toUpperCase() === product.brand.toUpperCase())
+      return arr.some(brand => brand === product.brand.name)
     }
   },
   price: {
@@ -131,8 +131,14 @@ export default Vue.extend({
 
   data () {
     const brands = [
-      'OMEGA',
-      'ROLEX'
+      {
+        id: 1,
+        name: 'ROLEX'
+      },
+      {
+        id: 2,
+        name: 'Omega'
+      }
     ]
 
     return {

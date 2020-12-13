@@ -60,9 +60,9 @@ export default Vue.extend({
           }
         )
         .then(res => {
+          console.log(document.cookie)
           document.cookie = `access_token=${res.data.auth_token}`
           this.token = getCookie('access_token')
-          console.log(this.token)
           this.$router.push('/')
         })
         .catch(error => {

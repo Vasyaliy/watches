@@ -1,12 +1,16 @@
 <template>
+    <!-- <div>
+          {{ product }}
+    </div> -->
   <v-card
     dark
     elevation="5"
+    :loading="loading"
     color="rgb(40, 40, 40)"
     class="main align-center"
     style="margin: 20px 100px;"
   >
-    <v-card-text>
+    <v-card-text v-if="!loading">
       <div style="margin: 0px 10px; padding: 40px; display: flex">
         <div style="width: 450px;">
           <v-carousel
@@ -16,9 +20,10 @@
             :value="imageNumber"
             style="width: 450px; height: 450px;"
             @change="change"
+            v-if="images"
           >
             <v-carousel-item
-              v-for="(image, i) in product.images"
+              v-for="(image, i) in images"
               :key="i"
             >
               <v-zoomer pivot="image-center" style="width: 450px; height: 450px;">
@@ -87,28 +92,37 @@
 </template>
 
 <script lang="ts">
+import router from '@/router'
 import axios from 'axios'
 import Vue from 'vue'
 import { products, getCookie } from '../Products'
 import Gallery from './Gallery.vue'
 
+interface Image {
+  ad: number;
+  image: string;
+}
 export default Vue.extend({
   components: {
     Gallery
   },
   data () {
     return {
-      product: products.currentProduct,
+      product: products.currentProduct as any,
       productProperties: [] as Array<string>,
       imageNumber: 0 as number,
-      images: [''] as Array<string>
+      images: [''] as Array<string>,
+      loading: false as boolean
     }
   },
-  mounted () {
+
+  created () {
     // @ts-ignore
-    this.productProperties = Object.keys(this.product)
+    // this.productProperties = Object.keys(this.product)
+    console.log(this.$route.params.productId)
+    this.loading = true
     axios
-      .get(`http://localhost:8000/watch/api/images/${this.product?.id}`,
+      .get(`http://localhost:8000/watch/api/product_get/${this.$route.params.productId}/`,
         {
           headers: {
             Authorization: `token ${getCookie('access_token')}`,
@@ -117,13 +131,32 @@ export default Vue.extend({
         }
       )
       .then(res => {
-        this.images = res.data.image
+        this.product = res.data
+        return axios
+          .get(`http://localhost:8000/watch/api/images/?ad=${this.$route.params.productId}`,
+            {
+              headers: {
+                Authorization: `token ${getCookie('access_token')}`,
+                'Content-Type': 'multipart/form-data'
+              }
+            }
+          )
+      })
+      .then(res => {
+        console.log(res.data)
+        this.images = res.data.map((obj: Image) => {
+          return obj.image
+        })
+        console.log(this.images)
+      })
+      .finally(() => {
+        this.loading = false
       })
   },
 
-  beforeCreate () {
-    if (!products.currentProduct) products.getProduct(+this.$route.params.productId)
-  },
+  // beforeCreate () {
+  //   if (!products.currentProduct) products.currentProduct = null
+  // },
 
   methods: {
     open () {

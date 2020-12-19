@@ -66,11 +66,15 @@ import axios from 'axios'
 import Vue from 'vue'
 import { getCookie } from '../../Products'
 export default Vue.extend({
+  props: {
+    selectors: {
+      type: Object
+    }
+  },
   data () {
     return {
       dialogm1: '',
       dialog: false,
-      selectors: {} as any,
       characteristics: {} as any,
       characteristicKeys: [] as Array<any>,
       dialName: {
@@ -91,21 +95,12 @@ export default Vue.extend({
     }
   },
   mounted () {
-    axios
-      .get('http://127.0.0.1:8000/product/properties/',
-        {
-          headers: {
-            Authorization: `token ${getCookie('access_token')}`,
-            'Content-Type': 'multipart/form-data'
-          }
-        })
-      .then(res => {
-        this.selectors = res.data
-        this.characteristicKeys = Object.keys(this.selectors)
-        this.characteristicKeys.forEach(key => {
-          this.characteristics[key] = null
-        })
-      })
+    console.log('as')
+    console.log(this.$props.selectors)
+    this.characteristicKeys = Object.keys(this.$props.selectors)
+    this.characteristicKeys.forEach(key => {
+      this.characteristics[key] = null
+    })
   }
 })
 </script>

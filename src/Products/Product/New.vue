@@ -6,19 +6,16 @@
     class="main align-center"
     style="margin: auto; margin-top: 20px; width: 65%"
   >
-
     <v-card-title>
       <div style="border-radius: 2px; position: relative;">
         <input
-          type="file"
-          multiple
-          name="image"
-          class="input-file"
-          @change="onFileSelected($event.target.files)"
-        >
-        <v-btn color="black" style="width: 100%">
-          Загрузить
-        </v-btn>
+            type="file"
+            multiple
+            name="image"
+            class="none-display"
+            ref="image"
+            @change="onFileSelected"
+          >
       </div>
     </v-card-title>
     <v-card-text>
@@ -70,10 +67,13 @@
             class="product-desc"
             style="width: 100%;"
           >
+          {{product.brand}}
             <div style="width: 100%">
               <v-combobox
                 v-model="product.brand"
-                :items="Products.brands.name"
+                :items="selectors.brand"
+                item-text="name"
+                item-value="id"
                 filled
                 label="Марка"
                 dense
@@ -106,7 +106,10 @@
                 filled
                 v-model="product.description"
               />
-              <characteristics @saveCharacteristic="getCharacteristicFromChild"/>
+              <characteristics
+                :selectors="selectors"
+                @saveCharacteristic="getCharacteristicFromChild"
+              />
             </div>
               <v-btn
                 width="100%"
@@ -136,6 +139,7 @@ export default Vue.extend({
       Products,
       product: Products.getIntial(),
       imageNumber: 0,
+      selectors: {},
       selectedFiles: [] as Array<any>,
       finalProduct: {}
 
@@ -146,18 +150,33 @@ export default Vue.extend({
     Characteristics,
     Gallery
   },
-
+  mounted () {
+    axios
+      .get('http://127.0.0.1:8000/product/properties/',
+        {
+          headers: {
+            Authorization: `token ${getCookie('access_token')}`,
+            'Content-Type': 'multipart/form-data'
+          }
+        })
+      .then(res => {
+        this.selectors = res.data
+        console.log(this.selectors)
+      })
+  },
   methods: {
     change (number: number) {
       this.imageNumber = number
     },
     getCharacteristicFromChild (data: any) {
-      this.product.charachteristics = data
+      this.product = { ...data, ...this.product }
+      console.log(this.product)
     },
     onFileSelected (event: any) {
       this.selectedFiles = event.target.files
       console.log(this.selectedFiles)
       for (let i = 0; i < this.selectedFiles.length; i++) {
+        console.log(i)
         const reader = new FileReader()
         reader.onload = (e) => {
           if (e.target) {
@@ -224,8 +243,14 @@ export default Vue.extend({
   // width: 530px;
 }
 
+.none-display {
+  display: none;
+  cursor: pointer;
+  z-index: 2;
+}
 .input-file {
   position: absolute;
+  cursor: pointer;
   // z-index: 1000;
   opacity: 0;
   top: 0px;

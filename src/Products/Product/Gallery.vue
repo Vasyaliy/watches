@@ -1,57 +1,25 @@
 <template>
-    <v-slide-group
-      class="pa-4"
-      style="height: 150px;"
-      show-arrows
-    >
-      <v-slide-item
-        v-for="(image, index) in images"
-        :key="image + index"
-        style="padding: 10px; margin-left: 10px;"
+    <!-- <div v-if="images.length > 1"> -->
+      <v-slide-group
+        class="pa-4"
+        style="height: 150px;"
+        center-active
+        active-class="active-image"
       >
-    <div v-if="images.length > 1">
-        <v-img @click="change(index)" :style="`width: 100px; opacity: ${localIndex === index ? '1' : '0.5'}`" :src="image"/>
-        <!-- <v-card
-          :color="active ? 'primary' : 'grey lighten-1'"
-          @click="toggle"
+        <v-slide-item
+          v-for="(image, index) in images"
+          :key="image + index"
+          class="pa-3 ml-3 active-image"
         >
-          <v-row
-            class="fill-height"
-            align="center"
-            justify="center"
-          >
-            <v-scale-transition>
-              <v-icon
-                v-if="active"
-                color="white"
-                size="48"
-                v-text="'mdi-close-circle-outline'"
-              ></v-icon>
-            </v-scale-transition>
-          </v-row>
-        </v-card> -->
-    </div>
-      </v-slide-item>
-    </v-slide-group>
-
-    <!-- <v-expand-transition>
-      <v-sheet
-        v-if="model != null"
-        height="200"
-        tile
-      >
-        <v-row
-          class="fill-height"
-          align="center"
-          justify="center"
-        >
-          <h3 class="title">
-            Selected {{ model }}
-          </h3>
-        </v-row>
-      </v-sheet>
-    </v-expand-transition>
-  </v-sheet> -->
+              <v-img
+                @click="change(index)"
+                class="img"
+                :style="`opacity: ${localIndex === index ? '1' : '0.5'}`"
+                :src="image"
+              />
+        </v-slide-item>
+      </v-slide-group>
+    <!-- </div> -->
 </template>
 
 <script lang="ts">
@@ -89,3 +57,11 @@ export default Vue.extend({
 
 })
 </script>
+<style lang='scss' scoped>
+.img {
+  display: flex;
+  width: 100px;
+  height: 100%;
+}
+
+</style>

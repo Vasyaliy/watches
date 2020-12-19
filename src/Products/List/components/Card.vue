@@ -48,7 +48,6 @@ export default Vue.extend({
     }
   },
   created () {
-    console.log(this.item.id)
     axios.get(`http://localhost:8000/watch/api/images/?ad=${this.item.id}`,
       {
         headers: {
@@ -57,7 +56,6 @@ export default Vue.extend({
         }
       })
       .then(res => {
-        console.log(res.data)
         this.image = res.data[0].image
       })
       .catch(console.log)

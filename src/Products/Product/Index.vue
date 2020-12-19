@@ -1,7 +1,4 @@
 <template>
-    <!-- <div>
-          {{ product }}
-    </div> -->
   <v-card
     dark
     elevation="5"
@@ -34,11 +31,11 @@
               </v-zoomer>
             </v-carousel-item>
           </v-carousel>
-          <Gallery
+          <!-- <Gallery
             :currentIndex="imageNumber"
             :images="images"
             @change="change"
-          />
+          /> -->
         </div>
         <div style="width: 50%; margin-left: 40px;">
           <div
@@ -51,7 +48,10 @@
             <div><p style="font-weight: bold;">Описание:</p> {{ product.description }}</div>
           </div>
           <div style="margin-top: 20px">
-            <v-expansion-panels style="width: 100%;">
+          </div>
+        </div>
+      </div>
+            <v-expansion-panels class='expansion-panel'>
               <v-expansion-panel
               >
                 <v-expansion-panel-header>
@@ -84,9 +84,6 @@
                   </v-expansion-panel-content>
               </v-expansion-panel>
             </v-expansion-panels>
-          </div>
-        </div>
-      </div>
     </v-card-text>
   </v-card>
 </template>
@@ -104,7 +101,7 @@ interface Image {
 }
 export default Vue.extend({
   components: {
-    Gallery
+    // Gallery
   },
   data () {
     return {
@@ -115,11 +112,7 @@ export default Vue.extend({
       loading: false as boolean
     }
   },
-
   created () {
-    // @ts-ignore
-    // this.productProperties = Object.keys(this.product)
-    console.log(this.$route.params.productId)
     this.loading = true
     axios
       .get(`http://localhost:8000/watch/api/product_get/${this.$route.params.productId}/`,
@@ -132,6 +125,7 @@ export default Vue.extend({
       )
       .then(res => {
         this.product = res.data
+        this.productProperties = Object.keys(this.product)
         return axios
           .get(`http://localhost:8000/watch/api/images/?ad=${this.$route.params.productId}`,
             {
@@ -143,21 +137,14 @@ export default Vue.extend({
           )
       })
       .then(res => {
-        console.log(res.data)
         this.images = res.data.map((obj: Image) => {
           return obj.image
         })
-        console.log(this.images)
       })
       .finally(() => {
         this.loading = false
       })
   },
-
-  // beforeCreate () {
-  //   if (!products.currentProduct) products.currentProduct = null
-  // },
-
   methods: {
     open () {
       // @ts-ignore
@@ -190,7 +177,12 @@ export default Vue.extend({
   // padding: 20px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   flex-direction: column;
+}
+
+.expansion-panel {
+  width: 100%;
+  padding: 0 40px;
 }
 </style>

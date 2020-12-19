@@ -77,7 +77,6 @@ export class Products {
       .catch(console.log)
       .then(response => {
         // @ts-ignore
-        console.log(response.data)
         // @ts-ignore
         this.list = response.data
       })

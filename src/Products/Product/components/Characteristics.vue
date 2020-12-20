@@ -50,11 +50,6 @@
           >
             Save
           </v-btn>
-          <v-btn
-            outlined
-          >
-            POST
-        </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -65,42 +60,49 @@
 import axios from 'axios'
 import Vue from 'vue'
 import { getCookie } from '../../Products'
+
 export default Vue.extend({
-  props: {
-    selectors: {
-      type: Object
-    }
-  },
   data () {
     return {
-      dialogm1: '',
-      dialog: false,
       characteristics: {} as any,
       characteristicKeys: [] as Array<any>,
-      dialName: {
-        name: 'циферблат',
-        options: [
-          { name: 'mettal', id: 1 },
-          { name: 'gerww', id: 2 },
-          { name: 'afaf', id: 3 }
-        ],
-        chosenId: 1
-      }
+      selectors: {} as any,
+      dialog: false
+      // dialName: {
+      //   name: 'циферблат',
+      //   options: [
+      //     { name: 'mettal', id: 1 },
+      //     { name: 'gerww', id: 2 },
+      //     { name: 'afaf', id: 3 }
+      //   ],
+      //   chosenId: 1
+      // }
+
     }
   },
   methods: {
     postCharacteristic () {
-      this.dialog = false
+      // this.dialog = false
       this.$emit('saveCharacteristic', this.characteristics)
     }
   },
   mounted () {
-    console.log('as')
-    console.log(this.$props.selectors)
-    this.characteristicKeys = Object.keys(this.$props.selectors)
-    this.characteristicKeys.forEach(key => {
-      this.characteristics[key] = null
-    })
+    console.log('rock')
+    axios
+      .get('http://127.0.0.1:8000/product/properties/',
+        {
+          headers: {
+            Authorization: `token ${getCookie('access_token')}`,
+            'Content-Type': 'multipart/form-data'
+          }
+        })
+      .then(res => {
+        this.selectors = res.data
+        this.characteristicKeys = Object.keys(this.selectors)
+        this.characteristicKeys.forEach(key => {
+          this.characteristics[key] = null
+        })
+      })
   }
 })
 </script>

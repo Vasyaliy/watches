@@ -67,9 +67,8 @@
             class="product-desc"
             style="width: 100%;"
           >
-          {{product.brand}}
             <div style="width: 100%">
-              <v-combobox
+              <v-select
                 v-model="product.brand"
                 :items="selectors.brand"
                 item-text="name"
@@ -77,7 +76,7 @@
                 filled
                 label="Марка"
                 dense
-              ></v-combobox>
+              ></v-select>
                <v-text-field
                 style="margin-right: 5px"
                 label="Имя"
@@ -88,12 +87,14 @@
                 <v-text-field
                   style="margin-right: 5px"
                   label="Цена"
+                  class="inputPrice"
+                  type="number"
                   filled
                   v-model="product.price"
                 />
                 <v-select
                   style="margin-left: 5px"
-                  :items="Products.conditions"
+                  :items="selectors.conditions"
                   label="Состояние"
                   filled
                   v-model.number="product.conditions"
@@ -141,8 +142,8 @@ export default Vue.extend({
       imageNumber: 0,
       selectors: {},
       selectedFiles: [] as Array<any>,
-      finalProduct: {}
-
+      finalProduct: {},
+      errorMessage: false as boolean
     }
   },
 
@@ -150,7 +151,7 @@ export default Vue.extend({
     Characteristics,
     Gallery
   },
-  mounted () {
+  created () {
     axios
       .get('http://127.0.0.1:8000/product/properties/',
         {
@@ -161,7 +162,6 @@ export default Vue.extend({
         })
       .then(res => {
         this.selectors = res.data
-        console.log(this.selectors)
       })
   },
   methods: {
@@ -176,7 +176,6 @@ export default Vue.extend({
       this.selectedFiles = event.target.files
       console.log(this.selectedFiles)
       for (let i = 0; i < this.selectedFiles.length; i++) {
-        console.log(i)
         const reader = new FileReader()
         reader.onload = (e) => {
           if (e.target) {
@@ -188,7 +187,6 @@ export default Vue.extend({
       }
     },
     postImgs (id: number) {
-      console.log(this.selectedFiles.length)
       for (let i = 0; i < this.selectedFiles.length; i++) {
         const fd = new FormData()
         fd.append('ad', `${id}`)
@@ -211,7 +209,6 @@ export default Vue.extend({
       }
     },
     postCharacteristic () {
-      console.log(this.product)
       axios
         .post('http://127.0.0.1:8000/product/create/',
           this.product,
@@ -224,15 +221,25 @@ export default Vue.extend({
         .then(res => {
           this.product.image = res.data.id
           this.postImgs(res.data.id)
+          this.$router.push('/')
+          alert('Объявление успешно создано')
         })
-        .catch((error) => console.log(error.response.request._response))
+        .catch((error) => {
+          console.log(error.response.request._response)
+          this.errorMessage = true
+        })
     }
   }
 })
 </script>
 
 <style lang="scss" scoped>
-
+.v-input .v-input__control .v-input__slot .v-text-field__slot input::-webkit-outer-spin-button,
+.v-input .v-input__control .v-input__slot .v-text-field__slot input::-webkit-inner-spin-button
+{
+-webkit-appearance: none;
+margin: 0;
+}
 .main {
   // margin: 10px;
   color: white;

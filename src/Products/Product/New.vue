@@ -67,7 +67,6 @@
             class="product-desc"
             style="width: 100%;"
           >
-          {{product.brand}}
             <div style="width: 100%">
               <v-select
                 v-model="product.brand"
@@ -208,7 +207,6 @@ export default Vue.extend({
       }
     },
     postCharacteristic () {
-      console.log(this.product)
       axios
         .post(`${host}/product/create/`,
           this.product,

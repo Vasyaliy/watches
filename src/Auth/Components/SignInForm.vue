@@ -22,15 +22,16 @@
       >
       </v-text-field>
        <v-btn  @click="postLoginInfo" class="form__button" color="#363636" block rounded>Далее</v-btn>
-       <v-card
+       <span
         v-if="tryAgain"
-        color="#ff3333"
+        style="color: #ff3333; margin-top: 10px"
         :loading="loading"
        >
         Логин или пароль введены неверно
         <br>
         попробуйте еще раз
-      </v-card>
+       </span>
+       <br>
       <a>Забыли пароль? </a>
     </div>
   </div>
@@ -39,6 +40,7 @@
 import Vue from 'vue'
 import axios from 'axios'
 import { getCookie } from '../../Products/Products'
+import host from '../../Products/config'
 
 export default Vue.extend({
   data () {
@@ -53,17 +55,18 @@ export default Vue.extend({
   methods: {
     postLoginInfo () {
       axios
-        .post('http://localhost:8000/api/v1/auth_token/token/login/',
+        .post(`${host}/api/v1/auth_token/token/login/`,
           {
             username: this.login,
             password: this.pass
           }
         )
         .then(res => {
-          console.log(document.cookie)
           document.cookie = `access_token=${res.data.auth_token}`
           this.token = getCookie('access_token')
+          console.log(document.cookie)
           this.$router.push('/')
+          console.log(res.data.auth_token)
         })
         .catch(error => {
           console.log(error)

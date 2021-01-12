@@ -1,4 +1,4 @@
-# chrono-clone
+# watches360
 
 ## Project setup
 ```

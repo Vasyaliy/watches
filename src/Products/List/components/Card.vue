@@ -25,6 +25,7 @@
 </template>
 
 <script lang="ts">
+import host from '@/Products/config'
 import axios from 'axios'
 import Vue from 'vue'
 import { getCookie } from '../../Products'
@@ -48,7 +49,7 @@ export default Vue.extend({
     }
   },
   created () {
-    axios.get(`http://localhost:8000/watch/api/images/?ad=${this.item.id}`,
+    axios.get(`${host}/watch/api/images/?ad=${this.item.id}`,
       {
         headers: {
           Authorization: `token ${getCookie('access_token')}`,

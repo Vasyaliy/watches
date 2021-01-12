@@ -5,10 +5,10 @@
         :class="`watches-label ${isAppearLabel ? 'appeared' : 'beforeAppear'}`"
         >
         <div class="watches-label" style="width: 100%; margin-bottom: 60px">
-          <h1 style="font-size: 150px; font-weight: 500; font-family: Roboto; color: white">
+          <h1 class="unselectable" style="font-size: 150px; font-weight: 500; font-family: Roboto; color: white">
             WATCHES
           </h1>
-          <h1 style="font-size: 150px; font-weight: 150; font-family: Roboto; color: white">
+          <h1 class="unselectable" style="font-size: 150px; font-weight: 150; font-family: Roboto; color: white">
             360
           </h1>
         </div>
@@ -20,7 +20,7 @@
             ПОСМОТРЕТЬ ОБЪЯВЛЕНИЯ
           </div>
           <div
-            @click="$router.push('/newProduct')"
+            @click="create()"
             class="look-products align-center"
           >
             СОЗДАТЬ ОБЪЯВЛЕНИЕ
@@ -74,6 +74,7 @@ import Manufactorers from './Manufactorers.vue'
 import Gurantee from './Gurantee.vue'
 import Axios from 'axios'
 import { getCookie } from '../Products/Products'
+import host from '@/Products/config'
 
 export default Vue.extend({
 
@@ -94,7 +95,7 @@ export default Vue.extend({
       this.isAppearLabel = true
     }, 200)
     Axios
-      .get('http://127.0.0.1:8000/api/v1/auth/users/me/',
+      .get(`${host}/api/v1/auth/users/me/`,
         {
           headers: {
             Authorization: `token ${getCookie('access_token')}`
@@ -106,6 +107,11 @@ export default Vue.extend({
         this.id = res.data
       })
       .catch(console.log)
+  },
+  methods: {
+    create () {
+      getCookie('access_token') ? this.$router.push('/newProduct') : this.$router.push('/auth')
+    }
   }
 })
 </script>
@@ -140,6 +146,13 @@ export default Vue.extend({
 
 .main {
   background-color: rgb(10, 10, 30);
+}
+.unselectable {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 .align-center {

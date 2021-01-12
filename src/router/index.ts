@@ -45,7 +45,14 @@ const routes: Array<RouteConfig> = [
         // which is lazy-loaded when the route is visited.
         component: () => import(/* webpackChunkName: "user" */ '../Products/List/Index.vue')
       },
-
+      {
+        path: '/myList',
+        name: 'myList',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "user" */ '../Products/List/MyList.vue')
+      },
       {
         path: '/list/:productId',
         name: 'product',

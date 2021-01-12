@@ -1,7 +1,7 @@
 <template>
   <div class="align-center main">
     <div style="width: 80%">
-      <div class="filters flex">
+      <!-- <div class="filters flex">
         <v-select
           style="margin: 5px;"
           label="Марки"
@@ -32,14 +32,14 @@
           multiple
           v-model="brands"
         />
-      </div>
-      <div style="width: 200px; color: white;">
+      </div> -->
+      <!-- <div style="width: 200px; color: white;">
         <span style="margin: 7px;">Цена от 0 до {{ price * 5000 }}₽ </span>
         <v-slider
           dark
           v-model="price"
         />
-      </div>
+      </div> -->
       <v-card
         :loading="$loading.value"
         dark
@@ -149,9 +149,6 @@ export default Vue.extend({
       loading: false
     }
   },
-  mounted () {
-    console.log(this.products.list)
-  },
 
   methods: {
     open (id: number) {
@@ -169,6 +166,7 @@ export default Vue.extend({
 <style lang="scss" scoped>
 
 .watches-list {
+  margin-top: 15px;
   display: flex;
   flex-wrap: wrap;
 }

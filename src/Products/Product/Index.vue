@@ -92,6 +92,7 @@
 import router from '@/router'
 import axios from 'axios'
 import Vue from 'vue'
+import host from '../config'
 import { products, getCookie } from '../Products'
 import Gallery from './Gallery.vue'
 
@@ -115,7 +116,7 @@ export default Vue.extend({
   created () {
     this.loading = true
     axios
-      .get(`http://localhost:8000/watch/api/product_get/${this.$route.params.productId}/`,
+      .get(`${host}/watch/api/product_get/${this.$route.params.productId}/`,
         {
           headers: {
             Authorization: `token ${getCookie('access_token')}`,
@@ -127,7 +128,7 @@ export default Vue.extend({
         this.product = res.data
         this.productProperties = Object.keys(this.product)
         return axios
-          .get(`http://localhost:8000/watch/api/images/?ad=${this.$route.params.productId}`,
+          .get(`${host}:8000/watch/api/images/?ad=${this.$route.params.productId}`,
             {
               headers: {
                 Authorization: `token ${getCookie('access_token')}`,

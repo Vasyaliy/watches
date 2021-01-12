@@ -69,7 +69,7 @@
           >
           {{product.brand}}
             <div style="width: 100%">
-              <v-combobox
+              <v-select
                 v-model="product.brand"
                 :items="selectors.brand"
                 item-text="name"
@@ -77,7 +77,7 @@
                 filled
                 label="Марка"
                 dense
-              ></v-combobox>
+              ></v-select>
                <v-text-field
                 style="margin-right: 5px"
                 label="Имя"
@@ -88,12 +88,14 @@
                 <v-text-field
                   style="margin-right: 5px"
                   label="Цена"
+                  class="inputPrice"
+                  type="number"
                   filled
                   v-model="product.price"
                 />
                 <v-select
                   style="margin-left: 5px"
-                  :items="Products.conditions"
+                  :items="selectors.conditions"
                   label="Состояние"
                   filled
                   v-model.number="product.conditions"
@@ -128,12 +130,11 @@
 <script lang="ts">
 import axios from 'axios'
 import Vue from 'vue'
+import host from '../config'
 import { Products, getCookie, products } from '../Products'
 import Characteristics from './components/Characteristics.vue'
 import Gallery from './Gallery.vue'
-
 export default Vue.extend({
-
   data () {
     return {
       Products,
@@ -141,18 +142,17 @@ export default Vue.extend({
       imageNumber: 0,
       selectors: {},
       selectedFiles: [] as Array<any>,
-      finalProduct: {}
-
+      finalProduct: {},
+      errorMessage: false as boolean
     }
   },
-
   components: {
     Characteristics,
     Gallery
   },
-  mounted () {
+  created () {
     axios
-      .get('http://127.0.0.1:8000/product/properties/',
+      .get(`${host}/product/properties/`,
         {
           headers: {
             Authorization: `token ${getCookie('access_token')}`,
@@ -161,7 +161,6 @@ export default Vue.extend({
         })
       .then(res => {
         this.selectors = res.data
-        console.log(this.selectors)
       })
   },
   methods: {
@@ -176,7 +175,6 @@ export default Vue.extend({
       this.selectedFiles = event.target.files
       console.log(this.selectedFiles)
       for (let i = 0; i < this.selectedFiles.length; i++) {
-        console.log(i)
         const reader = new FileReader()
         reader.onload = (e) => {
           if (e.target) {
@@ -188,14 +186,13 @@ export default Vue.extend({
       }
     },
     postImgs (id: number) {
-      console.log(this.selectedFiles.length)
       for (let i = 0; i < this.selectedFiles.length; i++) {
         const fd = new FormData()
         fd.append('ad', `${id}`)
         fd.append('image', this.selectedFiles[i], this.selectedFiles[i].name)
         console.log(fd)
         axios
-          .post('http://127.0.0.1:8000/watch/api/images/',
+          .post(`${host}/watch/api/images/`,
             fd,
             {
               headers: {
@@ -213,7 +210,7 @@ export default Vue.extend({
     postCharacteristic () {
       console.log(this.product)
       axios
-        .post('http://127.0.0.1:8000/product/create/',
+        .post(`${host}/product/create/`,
           this.product,
           {
             headers: {
@@ -224,25 +221,33 @@ export default Vue.extend({
         .then(res => {
           this.product.image = res.data.id
           this.postImgs(res.data.id)
+          this.$router.push('/')
+          alert('Объявление успешно создано')
         })
-        .catch((error) => console.log(error.response.request._response))
+        .catch((error) => {
+          console.log(error.response.request._response)
+          this.errorMessage = true
+        })
     }
   }
 })
 </script>
 
 <style lang="scss" scoped>
-
+.v-input .v-input__control .v-input__slot .v-text-field__slot input::-webkit-outer-spin-button,
+.v-input .v-input__control .v-input__slot .v-text-field__slot input::-webkit-inner-spin-button
+{
+-webkit-appearance: none;
+margin: 0;
+}
 .main {
   // margin: 10px;
   color: white;
   height: 85%
   // padding: 20px;
-
   // height: 391px;
   // width: 530px;
 }
-
 .none-display {
   display: none;
   cursor: pointer;
@@ -258,7 +263,6 @@ export default Vue.extend({
   width: 100%;
   height: 100%;
 }
-
 .file-placeholder {
   margin-left: 25px;
   height: 440px;
@@ -267,11 +271,9 @@ export default Vue.extend({
   border-radius: 10px;
   position: relative;
 }
-
 .input-file:hover {
   cursor: pointer;
 }
-
 .product-desc {
   // border: solid 1px white;
   height: 380px;

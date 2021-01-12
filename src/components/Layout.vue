@@ -14,12 +14,12 @@
         temporary
       >
         <v-list>
-          <v-img style="border-radius: 50%; margin-left: 20px;" width="70" height="70" src="https://sun1-15.userapi.com/c853524/v853524882/ac636/AQsWJVfPOvY.jpg"></v-img>
+          <!-- <v-img style="border-radius: 50%; margin-left: 20px;" width="70" height="70" src="https://sun1-15.userapi.com/c853524/v853524882/ac636/AQsWJVfPOvY.jpg"></v-img> -->
 
           <v-list-item link>
             <v-list-item-content>
-              <v-list-item-title class="title">Belmas</v-list-item-title>
-              <v-list-item-subtitle>belmas_i@gmail.com</v-list-item-subtitle>
+              <v-list-item-title class="title">{{username}}</v-list-item-title>
+              <v-list-item-subtitle>{{email}}</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -31,8 +31,8 @@
           dense
         >
           <v-list-item
-            @click="$router.push('/list')"
-            :disabled="$route.path.includes('/list')"
+            @click="$router.push('/myList')"
+            :disabled="$route.path.includes('/myList')"
             link
           >
             <v-list-item-icon>
@@ -104,12 +104,31 @@
           ></v-text-field>
         </v-row>
         <v-btn
+          v-if="authorized"
           small
           style="margin-left: 30px;"
           text
           @click="navDrawer = !navDrawer"
         >
           Личный кабинет
+        </v-btn>
+        <v-btn
+          v-if="authorized"
+          small
+          text
+          @click="logout"
+        >
+          Log out
+        </v-btn>
+        <v-btn
+          v-if="!authorized"
+          small
+          style="margin-left: 30px;"
+          text
+          @click="$router.push('/auth')"
+          :disabled="$route.path.includes('/auth')"
+        >
+          Log in
         </v-btn>
       </v-app-bar>
     </v-app>
@@ -118,7 +137,10 @@
 </template>
 
 <script lang="ts">
+import axios from 'axios'
 import Vue from 'vue'
+import { getCookie, deleteCookie } from '../Products/Products'
+import host from '../Products/config'
 
 // import HomeContent from './HomeContent.vue'
 
@@ -134,14 +156,42 @@ export default Vue.extend({
 
   data () {
     return {
-      navDrawer: false
+      navDrawer: false,
+      log: false,
+      username: 'Belmas',
+      email: 'asd@yadnex.ru'
     }
   },
-
+  computed: {
+    authorized: function () {
+      return !(getCookie('access_token') === null)
+    }
+  },
   methods: {
     home () {
       if (this.$route.path !== '/') this.$router.push('/')
+    },
+    logout () {
+      // this.log = !this.log
+      deleteCookie('access_token')
+      this.$router.push('/')
+      location.reload()
     }
+  },
+  mounted () {
+    console.log('asd')
+    console.log(getCookie('access_token') === null)
+    axios.get(`${host}/api/v1/auth/users/me/`,
+      {
+        headers: {
+          Authorization: `token ${getCookie('access_token')}`
+        }
+      }
+    )
+      .then((res) => {
+        this.username = res.data.username
+        this.email = res.data.email
+      })
   }
 })
 </script>

@@ -1,5 +1,6 @@
 import { productsMock } from './productsMock'
 import axios from 'axios'
+import host from './config'
 
 interface Brand {
   id: number;
@@ -21,6 +22,9 @@ export function getCookie (coockieName: string) {
   const results = document.cookie.match('(^|;) ?' + `${coockieName}` + '=([^;]*)(;|$)')
   if (results) return unescape(results[2])
   else return null
+}
+export function deleteCookie (coockieName: string) {
+  document.cookie = coockieName + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;'
 }
 
 export class Products {
@@ -73,7 +77,7 @@ export class Products {
   fetchProducts = () => {
     this.loading = true
     axios
-      .get('http://127.0.0.1:8000/watch/api/product_get/?format=json')
+      .get(`${host}/watch/api/product_get/?format=json`)
       .catch(console.log)
       .then(response => {
         // @ts-ignore

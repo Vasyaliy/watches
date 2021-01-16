@@ -1,10 +1,10 @@
-FROM node:lts-alpine
+FROM node:14
 
 RUN npm install -g serve
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY package.json ./
 
 RUN npm cache clean --force
 RUN npm install

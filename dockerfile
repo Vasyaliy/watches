@@ -1,15 +1,13 @@
-FROM node:14
+FROM node:12
 
-RUN npm install -g serve
+WORKDIR /usr/src/app
 
-WORKDIR /app
+COPY package*.json ./
 
-COPY package.json ./
-
-RUN npm cache clean --force
 RUN npm install
+RUN npm install -g serve
 
 COPY . .
 
-RUN npm run build
+EXPOSE 8080
 CMD serve -s dist -l 8080

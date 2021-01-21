@@ -131,13 +131,14 @@ export default Vue.extend({
 }
 
 .parallax {
-  background-image: url("./32.jpg");
-  // background-image: url("https://sun1-89.userapi.com/z-9k87VwW6T6y3JRtlGaU_PPmg30cpPNaoaRcA/mxVpxj8R0n0.jpg");
+  // background-image: url("https://sun9-39.userapi.com/impf/z5mrzzl_noLdnHUjp1npq68rcNE0VQxyWTL7pA/h-qxCOm8YP4.jpg?size=1200x350&quality=96&proxy=1&sign=3fcd3eaa9b2648beb1b89e12e2f5aa09&type=album");
+  background-image: url("https://sun1-89.userapi.com/z-9k87VwW6T6y3JRtlGaU_PPmg30cpPNaoaRcA/mxVpxj8R0n0.jpg");
   min-height: 550px;
-  background-attachment: fixed;
+  background-size: 100%;
+  // background-attachment: fixed;
   background-color: black;
   // opacity: 0.7;
-  background-position: center;
+  // background-position: center;
   /* border: solid 1px; */
   /* display: flex;
   justify-content: center;

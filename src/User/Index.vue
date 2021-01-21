@@ -150,17 +150,6 @@ export default Vue.extend({
         (v: string) => /^([+]?[0-9\s]{3,25})*$/i.test(v) || 'Неверно указан телефон'
       ]
     }
-  },
-  methods: {
-    attachFile (files: FileList) {
-      let photo = null
-      if (files) photo = files[0]
-      const reader = new FileReader()
-      reader.onload = () => {
-        this.avatar = reader.result as string
-      }
-      if (photo) reader.readAsDataURL(photo)
-    }
   }
 })
 </script>

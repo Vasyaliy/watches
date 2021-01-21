@@ -192,6 +192,7 @@ export default Vue.extend({
         this.username = res.data.username
         this.email = res.data.email
       })
+      .catch(console.log)
   }
 })
 </script>

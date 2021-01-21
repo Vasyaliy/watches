@@ -25,7 +25,11 @@
       </v-card-actions>
       <v-card-text>
         <sign-in-form v-if="tab === 'auth'"></sign-in-form>
-        <registration v-if="tab === 'registration'"></registration>
+        <registration
+          v-if="tab === 'registration'"
+          @toAuth="tab = 'auth'"
+        >
+        </registration>
       </v-card-text>
       <v-card-actions>
       </v-card-actions>
@@ -36,7 +40,6 @@
 import Vue from 'vue'
 import SignInForm from './Components/SignInForm.vue'
 import Registration from './Components/Registration.vue'
-import axios from 'axios'
 
 export default Vue.extend({
   name: 'signInPage',

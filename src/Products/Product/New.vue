@@ -161,6 +161,7 @@ export default Vue.extend({
       .then(res => {
         this.selectors = res.data
       })
+      .catch(console.log)
   },
   methods: {
     change (number: number) {
@@ -200,9 +201,6 @@ export default Vue.extend({
               }
             }
           )
-          .then(res => {
-            // console.log(res.data)
-          })
           .catch((error) => console.log(error.response.request._response))
       }
     },

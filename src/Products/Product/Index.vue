@@ -128,7 +128,7 @@ export default Vue.extend({
         this.product = res.data
         this.productProperties = Object.keys(this.product)
         return axios
-          .get(`${host}:8000/watch/api/images/?ad=${this.$route.params.productId}`,
+          .get(`${host}/watch/api/images/?ad=${this.$route.params.productId}`,
             {
               headers: {
                 Authorization: `token ${getCookie('access_token')}`,

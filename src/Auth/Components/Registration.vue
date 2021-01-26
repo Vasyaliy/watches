@@ -104,7 +104,8 @@ export default Vue.extend({
   },
   methods: {
     createUser () {
-      this.phone = '+7 ' + this.phone
+      this.phone = ('+7 ' + this.phone).replace(/\s+/g, ' ')
+      console.log(this.phone)
       if (this.password === this.password2) {
         axios.post(`${host}/registr/`, {
           username: this.username,
@@ -112,7 +113,7 @@ export default Vue.extend({
           password2: this.password2,
           email: this.email,
           city: 'Moscow',
-          phone: '',
+          phone: this.phone,
           company: false,
           avatar: null
         })

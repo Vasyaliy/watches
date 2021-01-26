@@ -9,7 +9,6 @@
         @keydown.enter="sendLoginInfo"
       >
       </v-text-field>
-      <a >Забыли адрес эл. почты? </a>
     </div>
     <div>
       <v-text-field
@@ -43,8 +42,8 @@ import host from '../../Products/config'
 export default Vue.extend({
   data () {
     return {
-      login: 'dio' as string,
-      pass: 'admin' as string,
+      login: '' as string,
+      pass: '' as string,
       tryAgain: false as boolean,
       loading: true as boolean,
       token: '' as any

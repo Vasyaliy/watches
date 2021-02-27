@@ -1,129 +1,130 @@
 <template>
-  <v-card
-    dark
-    elevation="5"
-    color="rgb(40, 40, 40)"
-    class="main align-center"
-    style="margin: auto; margin-top: 20px; width: 65%"
-  >
-    <v-card-title>
-      <div style="border-radius: 2px; position: relative;">
-        <input
-            type="file"
-            multiple
-            name="image"
-            class="none-display"
-            ref="image"
-            @change="onFileSelected"
-          >
-      </div>
-    </v-card-title>
-    <v-card-text>
-      <div style="display: flex; justify-content: space-between; padding: 10px;">
-        <div
-          class="align-center file-placeholder"
-          v-if="product.images.length === 0"
-          style=""
-        >
-          Загрузить фотографии
+  <div class="page">
+    <v-card
+      dark
+      elevation="5"
+      color="rgb(40, 40, 40)"
+      class="main align-center"
+      style="margin: auto; margin-top: 20px; width: 65%"
+    >
+      <v-card-title>
+        <div style="border-radius: 2px; position: relative;">
           <input
-            type="file"
-            multiple
-            name="image"
-            ref="image"
-            class="input-file"
-            @change="onFileSelected"
-          >
-        </div>
-        <div v-if="product.images.length > 0" style="width: 450px;">
-          <v-carousel
-            dark
-            hide-delimiter-background
-            show-arrows-on-hover
-            :value="imageNumber"
-            style="width: 450px; height: 450px;"
-            @change="change"
-          >
-            <v-carousel-item
-              v-for="(image, i) in product.images"
-              :key="i"
+              type="file"
+              multiple
+              name="image"
+              class="none-display"
+              ref="image"
+              @change="onFileSelected"
             >
-              <v-zoomer pivot="image-center" style="width: 450px; height: 450px;">
-                <img
-                  :src="image"
-                  style="object-fit: contain; width: 100%; height: 100%;"
-                >
-              </v-zoomer>
-            </v-carousel-item>
-          </v-carousel>
-          <Gallery
-            :currentIndex="imageNumber"
-            :images="product.images"
-            @change="change"
-          />
         </div>
-        <div style="width: 60%; margin-left: 20px">
+      </v-card-title>
+      <v-card-text>
+        <div style="display: flex; justify-content: space-between; padding: 10px;">
           <div
-            class="product-desc"
-            style="width: 100%;"
+            class="align-center file-placeholder"
+            v-if="product.images.length === 0"
+            style=""
           >
-            <div style="width: 100%">
-              <v-select
-                v-model="product.brand"
-                :items="selectors.brand"
-                item-text="name"
-                item-value="id"
-                filled
-                label="Марка"
-                dense
-              ></v-select>
-               <v-text-field
-                style="margin-right: 5px"
-                label="Имя"
-                filled
-                v-model="product.name"
-              />
-              <div style="display: flex;">
-                <v-text-field
-                  style="margin-right: 5px"
-                  label="Цена"
-                  class="inputPrice"
-                  type="number"
-                  filled
-                  v-model="product.price"
-                />
+            Загрузить фотографии
+            <input
+              type="file"
+              multiple
+              name="image"
+              ref="image"
+              class="input-file"
+              @change="onFileSelected"
+            >
+          </div>
+          <div v-if="product.images.length > 0" style="width: 450px;">
+            <v-carousel
+              dark
+              hide-delimiter-background
+              show-arrows-on-hover
+              :value="imageNumber"
+              style="width: 450px; height: 450px;"
+              @change="change"
+            >
+              <v-carousel-item
+                v-for="(image, i) in product.images"
+                :key="i"
+              >
+                <v-zoomer pivot="image-center" style="width: 450px; height: 450px;">
+                  <img
+                    :src="image"
+                    style="object-fit: contain; width: 100%; height: 100%;"
+                  >
+                </v-zoomer>
+              </v-carousel-item>
+            </v-carousel>
+            <Gallery
+              :currentIndex="imageNumber"
+              :images="product.images"
+              @change="change"
+            />
+          </div>
+          <div style="width: 60%; margin-left: 20px">
+            <div
+              class="product-desc"
+              style="width: 100%;"
+            >
+              <div style="width: 100%">
                 <v-select
-                  style="margin-left: 5px"
-                  :items="selectors.conditions"
-                  label="Состояние"
+                  v-model="product.brand"
+                  :items="selectors.brand"
+                  item-text="name"
+                  item-value="id"
                   filled
-                  v-model.number="product.conditions"
+                  label="Марка"
+                  dense
+                ></v-select>
+                 <v-text-field
+                  style="margin-right: 5px"
+                  label="Имя"
+                  filled
+                  v-model="product.name"
+                />
+                <div style="display: flex;">
+                  <v-text-field
+                    style="margin-right: 5px"
+                    label="Цена"
+                    class="inputPrice"
+                    type="number"
+                    filled
+                    v-model="product.price"
+                  />
+                  <v-select
+                    style="margin-left: 5px"
+                    :items="selectors.conditions"
+                    label="Состояние"
+                    filled
+                    v-model.number="product.conditions"
+                  />
+                </div>
+                <v-textarea
+                  label="Описание"
+                  no-resize
+                  full-width
+                  filled
+                  v-model="product.description"
+                />
+                <characteristics
+                  :selectors="selectors"
+                  @saveCharacteristic="getCharacteristicFromChild"
                 />
               </div>
-              <v-textarea
-                label="Описание"
-                no-resize
-                full-width
-                filled
-                v-model="product.description"
-              />
-              <characteristics
-                :selectors="selectors"
-                @saveCharacteristic="getCharacteristicFromChild"
-              />
+                <v-btn
+                  width="100%"
+                  color="black"
+                  style="margin-top: 20px;"
+                  @click="postCharacteristic()"
+                > Создать </v-btn>
             </div>
-              <v-btn
-                width="100%"
-                color="black"
-                style="margin-top: 20px;"
-                @click="postCharacteristic()"
-              > Создать </v-btn>
           </div>
         </div>
-      </div>
-    </v-card-text>
-
-  </v-card>
+      </v-card-text>
+    </v-card>
+  </div>
 </template>
 
 <script lang="ts">
@@ -239,7 +240,9 @@ margin: 0;
 .main {
   // margin: 10px;
   color: white;
-  height: 85%
+  background: black;
+  height: 85%;
+  margin-top: 70px;
   // padding: 20px;
   // height: 391px;
   // width: 530px;

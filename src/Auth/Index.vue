@@ -1,39 +1,41 @@
 <template>
-  <div style="auth-main">
-    <v-card
-      dark
-      color="rgba(0, 0, 0, 0.2)"
-      style="width: 400px; margin: auto; margin-top: 10px; border-radius: 5px"
-    >
-      <v-card-actions>
-        <v-btn
-          v-if="tab === 'auth'"
-          @click="tab = 'registration'"
-          text
-          color="white"
-        >
-          Зарегестрироваться
-        </v-btn>
-        <v-btn
-          v-if="tab === 'registration'"
-          @click="tab = 'auth'"
-          text
-          color="white"
-        >
-          Назад
-        </v-btn>
-      </v-card-actions>
-      <v-card-text>
-        <sign-in-form v-if="tab === 'auth'"></sign-in-form>
-        <registration
-          v-if="tab === 'registration'"
-          @toAuth="tab = 'auth'"
-        >
-        </registration>
-      </v-card-text>
-      <v-card-actions>
-      </v-card-actions>
-    </v-card>
+<div class="page">
+    <div style="auth-main">
+      <v-card
+        dark
+        color="rgba(0, 0, 0, 0.2)"
+        style="width: 400px; margin: auto; margin-top: 10px; border-radius: 5px"
+      >
+        <v-card-actions>
+          <v-btn
+            v-if="tab === 'auth'"
+            @click="tab = 'registration'"
+            text
+            color="white"
+          >
+            Зарегестрироваться
+          </v-btn>
+          <v-btn
+            v-if="tab === 'registration'"
+            @click="tab = 'auth'"
+            text
+            color="white"
+          >
+            Назад
+          </v-btn>
+        </v-card-actions>
+        <v-card-text>
+          <sign-in-form v-if="tab === 'auth'"></sign-in-form>
+          <registration
+            v-if="tab === 'registration'"
+            @toAuth="tab = 'auth'"
+          >
+          </registration>
+        </v-card-text>
+        <v-card-actions>
+        </v-card-actions>
+      </v-card>
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -66,9 +68,11 @@ export default Vue.extend({
 @import url('/styles.app.scss');
 
 .auth-main {
-  margin-top: 10px;
   width: 100vw;
   border: solid 1px white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   // height: 100%;
 }
 

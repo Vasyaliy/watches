@@ -1,91 +1,93 @@
 <template>
-  <v-card
-    dark
-    elevation="5"
-    :loading="loading"
-    color="rgb(40, 40, 40)"
-    class="main align-center"
-    style="margin: 20px 100px;"
-  >
-    <v-card-text v-if="!loading">
-      <div style="margin: 0px 10px; padding: 40px; display: flex">
-        <div style="width: 450px;">
-          <v-carousel
-            dark
-            hide-delimiter-background
-            show-arrows-on-hover
-            :value="imageNumber"
-            style="width: 450px; height: 450px;"
-            @change="change"
-            v-if="images"
-          >
-            <v-carousel-item
-              v-for="(image, i) in images"
-              :key="i"
+  <div class="page">
+    <v-card
+      dark
+      elevation="5"
+      :loading="loading"
+      color="rgb(40, 40, 40)"
+      class="main align-center"
+      style="margin: 20px 100px;"
+    >
+      <v-card-text v-if="!loading">
+        <div style="margin: 0px 10px; padding: 40px; display: flex">
+          <div style="width: 450px;">
+            <v-carousel
+              dark
+              hide-delimiter-background
+              show-arrows-on-hover
+              :value="imageNumber"
+              style="width: 450px; height: 450px;"
+              @change="change"
+              v-if="images"
             >
-              <v-zoomer pivot="image-center" style="width: 450px; height: 450px;">
-                <img
-                  :src="image"
-                  style="object-fit: contain; width: 100%; height: 100%;"
-                >
-              </v-zoomer>
-            </v-carousel-item>
-          </v-carousel>
-          <!-- <Gallery
-            :currentIndex="imageNumber"
-            :images="images"
-            @change="change"
-          /> -->
-        </div>
-        <div style="width: 50%; margin-left: 40px;">
-          <div
-            class="product-desc"
-            style="width: 100%;"
-          >
-            <h2> {{ product.name }} </h2>
-            <span style="font-weight: bold; font-size: 30px;">Цена {{ product.price }} </span>
-            <v-btn large color="black" style="width: 100%"> КУПИТЬ </v-btn>
-            <div><p style="font-weight: bold;">Описание:</p> {{ product.description }}</div>
-          </div>
-          <div style="margin-top: 20px">
-          </div>
-        </div>
-      </div>
-            <v-expansion-panels class='expansion-panel'>
-              <v-expansion-panel
+              <v-carousel-item
+                v-for="(image, i) in images"
+                :key="i"
               >
-                <v-expansion-panel-header>
-                  Характеристики
-                </v-expansion-panel-header>
-                  <v-expansion-panel-content>
-                  <v-simple-table>
-                    <template v-slot:default>
-                      <thead>
-                        <tr>
-                          <th class="text-left">
-                            Name
-                          </th>
-                          <th class="text-left">
-                            Calories
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr
-                          v-for="key in productProperties"
-                          :key="`${key}`"
-                        >
-                          <td> {{key}} </td>
-                          <td>{{ product[key] }}</td>
-                        </tr>
-                      </tbody>
-                    </template>
-                  </v-simple-table>
-                  </v-expansion-panel-content>
-              </v-expansion-panel>
-            </v-expansion-panels>
-    </v-card-text>
-  </v-card>
+                <v-zoomer pivot="image-center" style="width: 450px; height: 450px;">
+                  <img
+                    :src="image"
+                    style="object-fit: contain; width: 100%; height: 100%;"
+                  >
+                </v-zoomer>
+              </v-carousel-item>
+            </v-carousel>
+            <!-- <Gallery
+              :currentIndex="imageNumber"
+              :images="images"
+              @change="change"
+            /> -->
+          </div>
+          <div style="width: 50%; margin-left: 40px;">
+            <div
+              class="product-desc"
+              style="width: 100%;"
+            >
+              <h2> {{ product.name }} </h2>
+              <span style="font-weight: bold; font-size: 30px;">Цена {{ product.price }} </span>
+              <v-btn large color="black" style="width: 100%"> КУПИТЬ </v-btn>
+              <div><p style="font-weight: bold;">Описание:</p> {{ product.description }}</div>
+            </div>
+            <div style="margin-top: 20px">
+            </div>
+          </div>
+        </div>
+              <v-expansion-panels class='expansion-panel'>
+                <v-expansion-panel
+                >
+                  <v-expansion-panel-header>
+                    Характеристики
+                  </v-expansion-panel-header>
+                    <v-expansion-panel-content>
+                    <v-simple-table>
+                      <template v-slot:default>
+                        <thead>
+                          <tr>
+                            <th class="text-left">
+                              Name
+                            </th>
+                            <th class="text-left">
+                              Calories
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr
+                            v-for="key in productProperties"
+                            :key="`${key}`"
+                          >
+                            <td> {{key}} </td>
+                            <td>{{ product[key] }}</td>
+                          </tr>
+                        </tbody>
+                      </template>
+                    </v-simple-table>
+                    </v-expansion-panel-content>
+                </v-expansion-panel>
+              </v-expansion-panels>
+      </v-card-text>
+    </v-card>
+  </div>
 </template>
 
 <script lang="ts">

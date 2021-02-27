@@ -1,0 +1,142 @@
+$primary-color: #222222;
+$secondary-color: rgba(196,148,93);
+
+$gold-btn: #C4945D;
+
+$transition-duration: .3s;
+
+$dark-white-background: #F7F7F7;
+
+$transition-duration-long: .5s;
+
+.margin-bottom-medium {
+  margin-bottom: 60px;
+}
+.margin {
+  margin: 0 auto;
+  width: 60%;
+}
+
+.white-text {
+  margin-top: 0;
+  color: white !important;
+}
+
+.page {
+  height: 100vh;
+  background: $primary-color;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  flex-flow: row;
+}
+.golden-sign {
+  margin-left: 70px;
+  position: relative;
+  display: inline-block;
+  // left: 50%;
+  color: $gold-btn;
+  font-family: Lora;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 44px;
+  line-height: 54px;
+
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: -70px;
+    width: 44px;
+    height: 3px;
+    margin-right: 28px;
+    background: $gold-btn;
+  }
+}
+
+.standard-block {
+  padding: 105px 0;
+}
+
+.btn {
+  padding: 17px;
+  flex: 1 1 166px;
+  text-align: center;
+  align-items: center;
+  background: $gold-btn;
+  color: rgba(255, 255, 255, 0.884);
+  min-width: 166px;
+  padding: 0;
+  outline: none;
+  border: 0;
+  text-transform: uppercase;
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  margin-right: 12px;
+  height: 48px;
+  max-width: 217px;
+  transition: all 0.3s;
+  &:hover {
+    background: darken($color: $gold-btn, $amount: 20);
+  }
+
+  &--wide {
+    min-width: 217px;
+  }
+
+  &--widest {
+    min-width: 242px;
+  }
+
+  &--short {
+    min-width: 104px;
+  }
+  &--dark {
+    background: $primary-color !important;
+    color: rgba(255, 255, 255, 0.884);
+    border: 1px solid rgba(255, 255, 255, 0.308) !important;
+    height: 48px;
+    max-width: 175px;
+    flex: 1 1 100%;
+    &:hover {
+      background: lighten($color: $primary-color, $amount: 20) !important;
+    }
+  }
+
+}
+
+.margin-bottom-large {
+  margin-bottom: 60px;
+}
+
+.margin-bottom-standard {
+  margin-bottom: 30px;
+}
+
+.sign {
+  display: flex;
+  width: 374px;
+  // margin-left: 94px;
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 20px;
+  color: #222222;
+}
+
+.wide {
+  min-width: 480px;
+  margin-right: 34px;
+}

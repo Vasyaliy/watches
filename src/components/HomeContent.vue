@@ -1,88 +1,44 @@
 <template>
   <div>
-    <div class="parallax">
-      <div
-        :class="`watches-label ${isAppearLabel ? 'appeared' : 'beforeAppear'}`"
-        >
-        <div class="watches-label" style="width: 100%; margin-bottom: 60px">
-          <h1 class="unselectable" style="font-size: 150px; font-weight: 500; font-family: Roboto; color: white">
-            WATCHES
-          </h1>
-          <h1 class="unselectable" style="font-size: 150px; font-weight: 150; font-family: Roboto; color: white">
-            360
-          </h1>
-        </div>
-        <div style="display: flex; justify-content: space-between; width: 600px;">
-          <div
-            @click="$router.push('/list')"
-            class="look-products align-center"
-          >
-            ПОСМОТРЕТЬ ОБЪЯВЛЕНИЯ
-          </div>
-          <div
-            @click="create()"
-            class="look-products align-center"
-          >
-            СОЗДАТЬ ОБЪЯВЛЕНИЕ
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="advantages-box">
-      <v-card dark class="advantage">
-        <v-card-title>
-          Лучший выбор
-        </v-card-title>
-          <div style="margin: auto;">
-            <img  width="100%" style="object-fit: cover; height: 250px;" src="https://www.apetogentleman.com/wp-content/uploads/2019/02/below-500-watches.jpg">
-          </div>
-        <v-card-text>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab, amet eius beatae illum animi, error adipisci reprehenderit est eos repellat itaque odio fugit repellendus sequi dicta, ducimus natus eaque magni?
-        </v-card-text>
-      </v-card>
-      <v-card dark class="advantage">
-        <v-card-title>
-          Надежность
-        </v-card-title>
-          <div style="margin: auto;">
-            <img  width="100%" style="object-fit: cover; height: 250px;" src="https://i.ytimg.com/vi/vqJItXcRJ_o/maxresdefault.jpg">
-          </div>
-        <v-card-text>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab, amet eius beatae illum animi, error adipisci reprehenderit est eos repellat itaque odio fugit repellendus sequi dicta, ducimus natus eaque magni?
-        </v-card-text>
-      </v-card>
-      <v-card dark class="advantage">
-        <v-card-title>
-          Сила земли
-        </v-card-title>
-          <div style="margin: auto;">
-            <img  width="100%" style="object-fit: cover; height: 250px;" src="https://elite-lombard.ru/upload/iblock/53b/53b63228c395e300fcaff18fcfc36817.jpg">
-          </div>
-        <v-card-text>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab, amet eius beatae illum animi, error adipisci reprehenderit est eos repellat itaque odio fugit repellendus sequi dicta, ducimus natus eaque magni?
-        </v-card-text>
-      </v-card>
-    </div>
-    <manufactorers />
-    <gurantee />
+    <search-block/>
+    <watch-categories/>
+    <support-block/>
+    <popular-models/>
+    <brand-new/>
+    <sell-block/>
+    <buy-sell-card/>
+    <faq/>
+    <watch-footer/>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import Manufactorers from './Manufactorers.vue'
-import Gurantee from './Gurantee.vue'
 import Axios from 'axios'
 import { getCookie } from '../Products/Products'
 import host from '@/Products/config'
+import SearchBlock from './home-blocks/SearchBlock.vue'
+import WatchCategories from './home-blocks/WatchCategories.vue'
+import SupportBlock from './home-blocks/SupportBlock.vue'
+import PopularModels from './home-blocks/PopularModels.vue'
+import BrandNew from './home-blocks/BrandNew.vue'
+import SellBlock from './home-blocks/SellBlock.vue'
+import BuySellCard from './home-blocks/BuySellCard.vue'
+import Faq from './home-blocks/Faq.vue'
+import WatchFooter from './home-blocks/WatchFooter.vue'
 
 export default Vue.extend({
-
   components: {
-    Manufactorers,
-    Gurantee
+    SearchBlock,
+    WatchCategories,
+    SupportBlock,
+    PopularModels,
+    BrandNew,
+    SellBlock,
+    BuySellCard,
+    Faq,
+    WatchFooter
   },
-
   data () {
     return {
       isAppearLabel: false as boolean,
@@ -119,7 +75,6 @@ export default Vue.extend({
 <style lang="scss" scoped>
 .advantage {
   width: 30%;
-  // background-color: rgb(240, 240, 240)
 }
 
 .advantages-box {
@@ -130,19 +85,9 @@ export default Vue.extend({
   justify-content: space-between;
 }
 
-.parallax {
-  // background-image: url("https://sun9-39.userapi.com/impf/z5mrzzl_noLdnHUjp1npq68rcNE0VQxyWTL7pA/h-qxCOm8YP4.jpg?size=1200x350&quality=96&proxy=1&sign=3fcd3eaa9b2648beb1b89e12e2f5aa09&type=album");
-  background-image: url("https://sun1-89.userapi.com/z-9k87VwW6T6y3JRtlGaU_PPmg30cpPNaoaRcA/mxVpxj8R0n0.jpg");
-  min-height: 550px;
-  background-size: 100%;
-  // background-attachment: fixed;
-  background-color: black;
-  // opacity: 0.7;
-  // background-position: center;
-  /* border: solid 1px; */
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
+.search-block-1 {
+  min-height: 490px;
+  z-index: 3;
 }
 
 .main {

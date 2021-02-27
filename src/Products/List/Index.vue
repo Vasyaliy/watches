@@ -1,57 +1,20 @@
 <template>
-  <div class="align-center main">
-    <div style="width: 80%">
-      <!-- <div class="filters flex">
-        <v-select
-          style="margin: 5px;"
-          label="Марки"
-          v-model="filterParams.brand.value"
-          @blur="$router.push({ query: { brand: filterParams.brand.value } })"
+  <div class="page">
+    <div class="align-center main">
+      <div style="width: 80%">
+        <v-card
+          :loading="$loading.value"
           dark
-          multiple
-          :items="brands"
-        />
-        <v-select
-          style="margin: 5px;"
-          label="Модель"
-          dark
-          multiple
-          v-model="brands"
-        />
-        <v-select
-          style="margin: 5px;"
-          label="Размер"
-          dark
-          multiple
-          v-model="brands"
-        />
-        <v-select
-          style="margin: 5px;"
-          label="Местоположение"
-          dark
-          multiple
-          v-model="brands"
-        />
-      </div> -->
-      <!-- <div style="width: 200px; color: white;">
-        <span style="margin: 7px;">Цена от 0 до {{ price * 5000 }}₽ </span>
-        <v-slider
-          dark
-          v-model="price"
-        />
-      </div> -->
-      <v-card
-        :loading="$loading.value"
-        dark
-        class="watches-list"
-      >
-        <div v-for="(watch, index) in filteredList" :key="index">
-          <Card
-            @open="open"
-            :item="watch"
-          />
-        </div>
-      </v-card>
+          class="watches-list"
+        >
+          <div v-for="(watch, index) in filteredList" :key="index">
+            <Card
+              @open="open"
+              :item="watch"
+            />
+          </div>
+        </v-card>
+      </div>
     </div>
   </div>
 </template>

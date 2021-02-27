@@ -1,6 +1,6 @@
 <template>
-  <v-app>
-    <router-view />
+  <v-app class="app">
+    <router-view class="app" />
   </v-app>
 </template>
 
@@ -17,6 +17,9 @@ export default Vue.extend({
 </script>
 <style lang="scss" scoped>
 body {
+  }
+
+.app {
   background: black;
 }
 </style>

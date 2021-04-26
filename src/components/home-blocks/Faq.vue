@@ -88,4 +88,13 @@ export default Vue.extend({
 .faq-block:target .faq-block__answer {
   min-height: 100px;
 }
+
+@media screen and (max-width: 400px) {
+  .faq {
+    margin: 0 15px;
+    &__header {
+      font-size: 35px;
+    }
+  }
+}
 </style>

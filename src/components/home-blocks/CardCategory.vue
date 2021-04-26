@@ -38,6 +38,7 @@ export default Vue.extend({
   padding: 0;
   flex-direction: column;
   max-width: 264px;
+  max-height: 209px;
   background: white;
   border-bottom: 1px solid $gold-btn;
   overflow: hidden;
@@ -58,6 +59,7 @@ export default Vue.extend({
 
   &__img {
     position: relative;
+    max-height: 163px;
   }
 
   &:hover {

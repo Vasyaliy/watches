@@ -74,4 +74,24 @@
     margin-right: 10px;
   }
 }
+
+@media screen and (max-width: 640px) {
+  .buy-sell__heafer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+ .sign-search {
+    text-align: center;
+    font-size: 30px;
+  }
+}
+
+@media screen and (max-width: 404px) {
+  .buttons {
+    display: flex;
+    flex-flow: row nowrap;
+  }
+}
 </style>

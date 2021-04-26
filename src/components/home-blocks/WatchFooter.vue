@@ -15,14 +15,15 @@
 <style lang="scss" scoped>
 .watch-footer-wrapper {
   background: #141414;
-  height: 64px;
+  // height: 64px;
   display: flex;
   align-items: center;
+  padding: 0 15px;
 }
 
 .watch-footer {
   display: flex;
-  flex-flow: row;
+  flex-flow: row wrap;
   align-items: center;
   justify-content: space-between;
 }
@@ -31,6 +32,8 @@
   width: 50%;
   display: flex;
   justify-content: space-between;
+  flex-flow: row;
+  margin: 10px 0;
 }
 .watch-span {
   font-family: Montserrat;
@@ -55,8 +58,53 @@
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
+  margin: 25px 10px;
   line-height: 17px;
   color: #878787;
   text-decoration: none;
+  transition: color 0.2s;
+   &:hover {
+     color: white;
+  }
 }
+
+@media screen and (max-width: 1224px) {
+  .watch-footer {
+    flex-flow: column;
+  }
+  .logo {
+    margin-top: 15px;
+  }
+
+  .nav {
+    width: 100%;
+  }
+  .watch-span {
+    margin-bottom: 15px;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .logo {
+    margin: 35px 0;
+  }
+
+  .watch-span {
+    margin: 35px 0;
+  }
+
+  .link {
+    margin-left: 0;
+  }
+  .nav {
+    flex-flow: column;
+  }
+  .watch-footer {
+    align-items: flex-start;
+  }
+  .link {
+    margin: 5px 0;
+  }
+}
+
 </style>

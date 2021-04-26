@@ -38,6 +38,7 @@ export default Vue.extend({
   padding: 0;
   flex-direction: column;
   max-width: 188px;
+  max-height: 282px;
   background: white;
   overflow: hidden;
   transition: $transition-duration-long;
@@ -61,9 +62,17 @@ export default Vue.extend({
   &__img {
     position: relative;
     transition: $transition-duration;
+    max-height: 229px;
     &:hover {
       transform: scale(1.08);
     }
+  }
+}
+@media screen and (max-width: 650px) {
+  .card {
+    max-width: 163px;
+    margin-right: 0;
+    font-size: 14px;
   }
 }
 </style>

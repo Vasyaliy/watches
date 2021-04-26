@@ -16,9 +16,6 @@ export default Vue.extend({
 })
 </script>
 <style lang="scss" scoped>
-body {
-  }
-
 .app {
   background: black;
 }

@@ -46,8 +46,9 @@
 .sell-block-background {
   background-color: $primary-color;
   background-image: url("../../assets/background3.png");
-  background-color: white;
+  background-color: $primary-color;
   background-position: top right;
+  background-size: cover;
   background-repeat: no-repeat;
 }
 
@@ -57,7 +58,7 @@
 }
 .sell-block {
   color: white;
-  min-width: 550px;
+  // min-width: 550px;
   display: flex;
   flex-direction: row;
   margin-right: 34px;
@@ -97,6 +98,7 @@
     position: relative;
     margin-bottom: 25px;
     width: 48px;
+    max-height: 48px;
   }
   &__section {
     display: flex;
@@ -116,5 +118,38 @@
 
 .line:last-child {
   height: 0px;
+}
+
+@media screen and (max-width: 900px) {
+  .sell-block {
+    flex-flow: column;
+    margin-right: 0;
+
+    &__section {
+      flex-flow: row;
+      margin-right: 0;
+      margin-bottom: 34px;
+      align-items: space-around;
+      justify-content: space-around;
+      max-width: 282px;
+    }
+
+    &__img {
+      // margin-right: 7px;
+    }
+    &__point {
+      top: 5px;
+      margin-left: 5px;
+      margin-right: 10px;
+      width: 20px;
+      height: 11px;
+    }
+  }
+
+  .line {
+    width: 1px;
+    height: 123%;
+    border-left: 1px dashed #626262;
+  }
 }
 </style>

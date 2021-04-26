@@ -4,7 +4,7 @@
       <v-card
         dark
         color="rgba(0, 0, 0, 0.2)"
-        style="width: 400px; margin: auto; margin-top: 10px; border-radius: 5px"
+        class="card"
       >
         <v-card-actions>
           <v-btn
@@ -42,6 +42,7 @@
 import Vue from 'vue'
 import SignInForm from './Components/SignInForm.vue'
 import Registration from './Components/Registration.vue'
+import { getCookie, deleteCookie } from '../Products/Products'
 
 export default Vue.extend({
   name: 'signInPage',
@@ -60,6 +61,9 @@ export default Vue.extend({
     toLoading () {
       console.log('sada')
     }
+  },
+  mounted () {
+    if (getCookie('access_token') !== null) this.$router.push('/myList')
   }
 })
 </script>
@@ -90,6 +94,14 @@ export default Vue.extend({
 }
 .form__button {
   height: 47px;
+}
+.card {
+  display: flex;
+  flex-flow: column;
+  min-width: 250px;
+  width: 350px;
+  flex: 1 1 400px;
+  border-radius: 5px;
 }
 // .sign-main_form {
 //   margin-top: 40px;

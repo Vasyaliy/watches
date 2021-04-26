@@ -6,13 +6,14 @@
           <span class="sign-search sign-gold">Найди часы </span>
           <span class="sign-search"> класса люкс
             <br>
-            на крупнейшей площадке
+            на крупнейшей </span>
+            <span class="sign-search"> площадке
           </span>
         </div>
         <div class="search-block__field-group slide-in-left">
           <div class="search-block__field">
             <input type="text" class="input"/>
-            <button @click="$router.push('/list')" class="btn"> Найти часы</button>
+            <button @click="$router.push('/list')" class="btn"> Найти</button>
           </div>
           <button @click="$router.push('/newProduct')" class="btn btn--dark"> продать часы </button>
         </div>
@@ -23,14 +24,14 @@
       </div>
     </div>
     <footer class="search-footer margin">
-        <div class="search-footer__span-container">
+        <nav class="search-footer__nav">
           <span class="search-footer__span">Rolex</span>
           <span class="search-footer__span">Omega</span>
           <span class="search-footer__span">Hublot</span>
           <span class="search-footer__span">Ulysse nardin</span>
           <span class="search-footer__span">breiting</span>
           <span class="search-footer__span">Patek philippe</span>
-        </div>
+        </nav>
         <a class="search-footer__link" href="#">Все марки</a>
       </footer>
   </div>
@@ -38,7 +39,7 @@
 <style lang="scss" scoped>
 .btn {
   padding: 5px;
-  flex: 1 1 166px;
+  flex: 1 1 48px;
   align-items: center;
   background: $gold-btn;
   color: rgba(255, 255, 255, 0.884);
@@ -80,10 +81,17 @@
   background-image: url("../../assets/background1.png");
   background-attachment: fixed;
   background-position: top right;
+  background-size: cover;
   background-repeat: no-repeat;
 
+  &__group {
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+  }
   &__field-group {
     display: flex;
+    max-height: 48px;
     width: 775px;
     flex-flow: row;
     flex: 1 1 100%;
@@ -141,6 +149,7 @@
   display: flex;
   position: relative;
   flex: 1 1 550px;
+  resize: vertical;
   // width: 100%;
   // max-width: 550px;
   padding: 8px 16px;
@@ -162,15 +171,24 @@
   }
 }
 
+::-webkit-scrollbar { width:0; height:0 }
+::-webkit-scrollbar-thumb { background: transparent}
+::-webkit-scrollbar-track { background-color: transparent}
+
 .search-footer {
   display: flex;
   border-top: 1px solid rgba(255, 255, 255, 0.301);
   justify-content: space-between;
   align-self: flex-end;
+  // min-width: 816px;
 
-  &__span-container {
+  &__nav {
+    -webkit-overflow-scrolling: touch;
+    display: flex;
+    overflow-x: scroll;
     justify-content: flex-start;
     padding: 23px 0;
+    white-space: nowrap;
   }
   &__span {
     text-transform: uppercase;
@@ -193,20 +211,84 @@
     line-height: 17px;
     color: rgba(255, 255, 255, 0.692);
     cursor: pointer;
+    min-width: 80px;
   }
 }
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1024px) {
   .search-block {
+    &__field-group {
+      width: 100%;
+      flex-flow: row wrap;
+    }
     &__group {
-      flex-wrap: wrap;
+      flex: row wrap;
     }
     &__container {
       flex-flow: row wrap;
     }
+    &__img {
+      top: 0px;
+      width: 100%;
+      transform: scale(0.9, 0.9);
+    }
   }
-
+  .search-footer {
+   &__link {
+     display: none;
+   }
+  }
   .btn {
     min-width: 85px;
+  }
+}
+@media screen and (max-width: 874px) {
+  .search-footer {
+    &__nav {
+      margin: 0 10px;
+      max-width: 600px;
+    }
+
+    &__link {
+      padding-left: 5px;
+      display: none;
+    }
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .search-block {
+    &__sign {
+      margin-top: 100px;
+    }
+    .btn {
+      margin-right: 20px;
+    }
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .sign-search {
+    font-size: 40px;
+  }
+  .search-block {
+    &__container {
+      padding: 0 15px;
+    }
+    &__sign {
+      // margin-top: 55px;
+      display: flex;
+      flex-flow: column wrap;
+    }
+
+    &__img {
+      left: -35px;
+      top: -20px;
+      width: 100%;
+      transform: scale(0.6, 0.6);
+    }
+  }
+  .btn {
+    font-size: 14px;
   }
 }
 

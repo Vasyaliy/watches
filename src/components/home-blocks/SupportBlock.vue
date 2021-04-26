@@ -27,6 +27,7 @@
   background-image: url("../../assets/background.png");
   background-position: top right;
   background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .support-block-wrapper {
@@ -55,6 +56,18 @@
     font-size: 16px;
     line-height: 20px;
     color: #BEBEBE;
+  }
+}
+@media screen and (max-width: 1269px) {
+  .support-block-wrapper {
+    justify-content: center;
+    align-items: center;
+    flex-flow: row wrap;
+  }
+  .support-block {
+    min-width: 282px;
+    margin-bottom: 36px;
+    margin-right: 20px;
   }
 }
 </style>

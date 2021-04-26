@@ -35,7 +35,7 @@
 <style lang="scss" scoped>
 
   .categories-block-wrapper {
-    min-height: 850px;
+    // min-height: 850px;
     background-color: $dark-white-background;
   }
 
@@ -50,8 +50,13 @@
     align-items: flex-start;
 
     &__card {
+      display: flex;
+      flex-flow: column;
+      flex: 1 1;
       max-width: 362px;
+      max-height: 408px;
       margin-top: 20px;
+      margin-right: 5px;
 
     }
     &__img {
@@ -94,8 +99,22 @@
   color: #222222;
 }
 
-.wide {
-  min-width: 480px;
-  margin-right: 34px;
+@media screen and (max-width: 1689px) {
+  .categories {
+    &__card {
+      margin-top: 50px;
+    }
+  }
+}
+@media screen and (max-width: 900px) {
+  .categories {
+    justify-content: center;
+
+    &__card {
+      flex: auto;
+      margin-top: 70px;
+    }
+  }
+
 }
 </style>

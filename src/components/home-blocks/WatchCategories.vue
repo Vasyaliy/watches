@@ -60,4 +60,9 @@ export default Vue.extend({
   }
   .categories-block {
   }
+  @media screen and (max-width: 1809px) {
+    .categories-container {
+      justify-content: center;
+    }
+  }
 </style>

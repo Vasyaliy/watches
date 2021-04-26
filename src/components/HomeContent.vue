@@ -41,15 +41,11 @@ export default Vue.extend({
   },
   data () {
     return {
-      isAppearLabel: false as boolean,
       id: 0 as number
     }
   },
 
   mounted () {
-    setTimeout(() => {
-      this.isAppearLabel = true
-    }, 200)
     Axios
       .get(`${host}/api/v1/auth/users/me/`,
         {

@@ -110,7 +110,6 @@ export default Vue.extend({
         axios.post(`${host}/registr/`, {
           username: this.username,
           password: this.password,
-          password2: this.password2,
           email: this.email,
           city: 'Moscow',
           phone: this.phone,

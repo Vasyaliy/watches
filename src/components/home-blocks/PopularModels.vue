@@ -63,5 +63,9 @@ export default Vue.extend({
     justify-content: space-between;
     align-items: flex-start;
   }
-
+@media screen and (max-width: 380px) {
+  .categories {
+    justify-content: center;
+  }
+}
 </style>

@@ -81,7 +81,6 @@ export default Vue.extend({
   &__link {
     cursor: pointer;
   }
-
   &__create {
   display: block;
   cursor: pointer;

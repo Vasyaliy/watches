@@ -5,7 +5,7 @@
       elevation="5"
       color="rgb(40, 40, 40)"
       class="main align-center"
-      style="margin: auto; margin-top: 20px; width: 65%"
+      style="margin: auto; margin-top: 60px; width: 65%"
     >
       <v-card-title>
         <div style="border-radius: 2px; position: relative;">

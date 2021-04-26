@@ -93,4 +93,20 @@ export default Vue.extend({
   transition: all 0.2s ease-in;
   transform: scale(-1, -1)
 }
+@media screen and (max-width: 600px) {
+  .slide {
+    max-height: 130px;
+  }
+}
+@media screen and (max-width: 400px) {
+  .slide {
+    max-height: 150px;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .slide {
+    max-height: 170px;
+  }
+}
 </style>

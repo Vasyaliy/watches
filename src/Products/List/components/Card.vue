@@ -3,7 +3,7 @@
     dark
     elevation="5"
     color="rgb(40, 40, 40)"
-    class="main align-center"
+    class="card-main align-center"
     style="height: 400px;"
   >
     <v-img
@@ -66,7 +66,7 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 
-.main {
+.card-main {
   margin: 10px;
   color: white;
   // padding: 20px;

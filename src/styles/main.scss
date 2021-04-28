@@ -23,7 +23,7 @@ $transition-duration-long: .5s;
 }
 
 .page {
-  height: 100vh;
+  min-height: 100vh;
   background: $primary-color;
   display: flex;
   justify-content: center;
@@ -64,12 +64,13 @@ $transition-duration-long: .5s;
 
 .standard-block {
   padding: 105px 0;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 .btn {
   padding: 17px;
   flex: 1 1 166px;
+  max-height: 51px;
   text-align: center;
   align-items: center;
   background: $gold-btn;
@@ -153,10 +154,14 @@ $transition-duration-long: .5s;
   .wide {
     margin-right: 0;
   }
+  .margin {
+    width: 84%;
+  }
   
   .golden-sign {
     font-size: 36px;
     margin-left: 0px;
+    margin-top: 3px;
     text-align: center;  
     &::after {
       content: '';
@@ -174,18 +179,14 @@ $transition-duration-long: .5s;
     text-align: center;
     font-size: 15px;
   }
-}
-@media screen and (max-width: 1024px) {
-  .margin {
-    width: 80%;
-  }
-  
-  .standard-block {
+   .standard-block {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 80px 15px;
   }
+}
+@media screen and (max-width: 1024px) { 
   .btn {
     max-height: 48px;
     font-size: 14px;
@@ -205,6 +206,9 @@ $transition-duration-long: .5s;
   .sign {
     font-size: 13px;
   }
+  .standard-block {
+    padding: 80px 8px;
+  }
 }
 
 @media screen and (max-width: 375px) {
@@ -214,6 +218,9 @@ $transition-duration-long: .5s;
 }
 
 @media screen and (max-width: 330px) {
+  .margin {
+    width: 100%;
+  }
   .sign {
     max-width: 300px;
   }

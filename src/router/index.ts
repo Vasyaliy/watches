@@ -53,6 +53,30 @@ const routes: Array<RouteConfig> = [
         component: () => import(/* webpackChunkName: "user" */ '../Products/List/Index.vue')
       },
       {
+        path: '/EmailVerification/:id',
+        name: 'EmailVerification',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "user" */ '../components/EmailVerification.vue')
+      },
+      {
+        path: '/NewPassword/:udb64/:token',
+        name: 'NewPassword',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "user" */ '../components/NewPassword.vue')
+      },
+      {
+        path: '/RestorePassword',
+        name: 'RestorePassword',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "user" */ '../components/RestorePassword.vue')
+      },
+      {
         path: '/myList',
         name: 'myList',
         // route level code-splitting

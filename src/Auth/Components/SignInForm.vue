@@ -2,9 +2,8 @@
   <div class="form__email">
     <div>
       <v-text-field
-        value="dio"
         dark
-        label="E-mail"
+        label="login"
         v-model="login"
         @keydown.enter="sendLoginInfo"
       >
@@ -61,6 +60,7 @@ export default Vue.extend({
         .then(res => {
           document.cookie = `access_token=${res.data.auth_token}`
           this.token = getCookie('access_token')
+          console.log(this.token)
           console.log(document.cookie)
           this.$router.push('/')
           console.log(res.data.auth_token)

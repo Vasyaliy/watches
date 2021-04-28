@@ -39,6 +39,7 @@ export default Vue.extend({
   flex-direction: column;
   max-width: 188px;
   max-height: 282px;
+  align-items: center;
   background: white;
   overflow: hidden;
   transition: $transition-duration-long;
@@ -63,6 +64,7 @@ export default Vue.extend({
     position: relative;
     transition: $transition-duration;
     max-height: 229px;
+    max-width: 188px;
     &:hover {
       transform: scale(1.08);
     }

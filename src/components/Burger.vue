@@ -61,7 +61,7 @@ $translateX: 0;
 #burger {
   display: none;
 }
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1024px) {
   #burger {
     display: block;
   }

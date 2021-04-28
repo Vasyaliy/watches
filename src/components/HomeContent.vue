@@ -59,11 +59,6 @@ export default Vue.extend({
         this.id = res.data
       })
       .catch(console.log)
-  },
-  methods: {
-    create () {
-      getCookie('access_token') ? this.$router.push('/newProduct') : this.$router.push('/auth')
-    }
   }
 })
 </script>

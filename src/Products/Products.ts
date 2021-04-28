@@ -77,10 +77,12 @@ export class Products {
   fetchProducts = () => {
     this.loading = true
     axios
-      .get(`${host}/watch/api/product_get/?format=json`)
+      .get('http://localhost:8000/watch/api/product_get/')
       .catch(console.log)
       .then(response => {
+        console.log(' i got it')
         // @ts-ignore
+        console.log(response.data)
         // @ts-ignore
         this.list = response.data
       })

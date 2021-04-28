@@ -89,12 +89,12 @@ export default Vue.extend({
       password: '',
       passwordRules: [
         v => !!v || 'password is required',
-        v => (v && v.length >= 5) || 'Password must have 5+ characters'
+        v => (v && v.length >= 6) || 'Password must have 6+ characters'
       ],
       password2: '',
       password2Rules: [
         v => !!v || 'password is required',
-        v => (v && v.length >= 5) || 'Password must have 5+ characters'
+        v => (v && v.length >= 6) || 'Password must have 6+ characters'
       ],
       phone: '' as string,
       phoneRules: [

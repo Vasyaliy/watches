@@ -5,7 +5,7 @@
       elevation="5"
       color="rgb(40, 40, 40)"
       class="main align-center"
-      style="margin: auto; margin-top: 60px; width: 65%"
+      style=""
     >
       <v-card-title>
         <div style="border-radius: 2px; position: relative;">
@@ -84,7 +84,7 @@
                   filled
                   v-model="product.name"
                 />
-                <div style="display: flex;">
+                <div style="display: flex; flex-flow: wrap;">
                   <v-text-field
                     style="margin-right: 5px"
                     label="Цена"
@@ -150,19 +150,35 @@ export default Vue.extend({
     Characteristics,
     Gallery
   },
-  created () {
+  mounted () {
     axios
-      .get(`${host}/product/properties/`,
+      .get(`${host}/api/v1/auth/users/me/`,
         {
           headers: {
-            Authorization: `token ${getCookie('access_token')}`,
-            'Content-Type': 'multipart/form-data'
+            Authorization: `token ${getCookie('access_token')}`
           }
-        })
+        }
+      )
       .then(res => {
-        this.selectors = res.data
+        this.product.user = res.data.id
       })
-      .catch(console.log)
+  },
+  created () {
+    if (getCookie('access_token') === null) this.$router.push('./auth')
+    else {
+      axios
+        .get(`${host}/product/properties/`,
+          {
+            headers: {
+              Authorization: `token ${getCookie('access_token')}`,
+              'Content-Type': 'multipart/form-data'
+            }
+          })
+        .then(res => {
+          this.selectors = res.data
+        })
+        .catch(console.log)
+    }
   },
   methods: {
     change (number: number) {
@@ -243,6 +259,8 @@ margin: 0;
   background: black;
   height: 85%;
   margin-top: 70px;
+  margin: auto;
+  width: 65%
   // padding: 20px;
   // height: 391px;
   // width: 530px;
@@ -284,4 +302,12 @@ margin: 0;
   justify-content: space-between;
   flex-direction: column;
 }
+
+@media screen and (max-width: 800px) {
+  .main {
+    margin: 0;
+    width: 100%;
+  }
+}
+
 </style>

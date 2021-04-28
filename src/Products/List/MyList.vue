@@ -1,6 +1,7 @@
 <template>
   <div class="align-center main">
-    <div style="width: 80%">
+    <span class="golden-sign white-text span">Ваши объявления</span>
+    <div style="max-width: 1000px;">
       <v-card
         :loading="$loading.value"
         dark
@@ -13,6 +14,15 @@
           />
         </div>
       </v-card>
+      <v-btn
+        @click="logout()"
+        color="#363636"
+        style="margin: 30px 0"
+        block
+        dark
+      >
+        Выйти из аккаунта
+      </v-btn>
     </div>
   </div>
 </template>
@@ -20,7 +30,8 @@
 <script lang="ts">
 import Vue from 'vue'
 import Card from './components/Card.vue'
-import { getCookie, products, Product } from '../Products'
+import { getCookie, deleteCookie, products, Product } from '../Products'
+
 import host from '../config'
 
 import axios from 'axios'
@@ -68,6 +79,12 @@ export default Vue.extend({
     open (id: number) {
       this.products.getProduct(id)
       this.$router.push(`list/${id}`)
+    },
+    logout () {
+      // this.log = !this.log
+      deleteCookie('access_token')
+      this.$router.push('/auth')
+      location.reload()
     }
   }
 })
@@ -75,7 +92,26 @@ export default Vue.extend({
 <style scoped>
 .watches-list {
   display: flex;
-  flex-wrap: wrap;
-  margin-top: 15px;
+  flex-flow: wrap;
+  margin-top: 25px;
 }
+.main {
+  min-height: 100vh;
+  padding: 15px;
+  display: flex;
+  flex-flow: column;
+}
+.span {
+  margin-top: 75px;
+}
+
+@media screen and (max-width: 800px) {
+  .main {
+    align-items: center;
+  }
+  .watches-list {
+    justify-content: center;
+  }
+}
+
 </style>

@@ -1,7 +1,7 @@
 <template>
-  <div class="page">
     <div class="align-center main">
-      <div style="width: 80%">
+      <span class="golden-sign white-text span">Все объявления</span>
+      <div style="max-width: 1000px">
         <v-card
           :loading="$loading.value"
           dark
@@ -16,7 +16,6 @@
         </v-card>
       </div>
     </div>
-  </div>
 </template>
 
 <script lang="ts">
@@ -129,9 +128,28 @@ export default Vue.extend({
 <style lang="scss" scoped>
 
 .watches-list {
-  margin-top: 15px;
   display: flex;
-  flex-wrap: wrap;
+  flex-flow: wrap;
+  margin-top: 25px;
+  justify-content: center;
+}
+.main {
+  min-height: 100vh;
+  padding: 15px;
+  display: flex;
+  flex-flow: column;
+}
+.span {
+  margin-top: 75px;
+}
+
+@media screen and (max-width: 800px) {
+  .main {
+    align-items: center;
+  }
+  .watches-list {
+    justify-content: center;
+  }
 }
 
 </style>

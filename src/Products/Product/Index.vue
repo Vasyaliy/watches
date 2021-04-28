@@ -6,10 +6,9 @@
       :loading="loading"
       color="rgb(40, 40, 40)"
       class="main align-center"
-      style="margin: 20px 100px;"
     >
       <v-card-text v-if="!loading">
-        <div style="margin: 0px 10px; padding: 40px; display: flex">
+        <div class="main__child">
           <div style="width: 450px;">
             <v-carousel
               dark
@@ -38,7 +37,7 @@
               @change="change"
             /> -->
           </div>
-          <div style="width: 50%; margin-left: 40px;">
+          <div>
             <div
               class="product-desc"
               style="width: 100%;"
@@ -92,7 +91,7 @@
 
 <script lang="ts">
 import router from '@/router'
-import axios from 'axios'
+import axios, { AxiosRequestConfig, AxiosPromise, AxiosResponse } from 'axios'
 import Vue from 'vue'
 import host from '../config'
 import { products, getCookie } from '../Products'
@@ -164,17 +163,21 @@ export default Vue.extend({
 <style lang="scss" scoped>
 
 .main {
-  // margin: 10px;
-  color: white;
-  // padding: 20px;
+  margin: 75px;
+  padding: 20px;
 
   // height: 391px;
   // width: 530px;
+  &__child {
+    display: flex;
+    flex-flow: row;
+    margin: 20px;
+  }
 }
 
 .product-desc {
   // border: solid 1px white;
-  height: 380px;
+  min-height: 380px;
   color: white;
   // margin: 0px 20px;
   // padding: 20px;
@@ -186,6 +189,18 @@ export default Vue.extend({
 
 .expansion-panel {
   width: 100%;
-  padding: 0 40px;
 }
+@media screen and (max-width: 980px) {
+  .expansion-panel {
+    padding: 0 0;
+  }
+  .main {
+    &__child {
+      display: flex;
+      flex-flow: wrap;
+      justify-content: center;
+    }
+  }
+}
+
 </style>

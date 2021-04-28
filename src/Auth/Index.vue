@@ -32,8 +32,11 @@
           >
           </registration>
         </v-card-text>
-        <v-card-actions>
-        </v-card-actions>
+        <!-- <v-card-actions>
+        </v-card-actions> -->
+        <div class="link__wrapper">
+          <a href="#" @click="$router.push('/RestorePassword')" class="link"> Забыли пароль? </a>
+        </div>
       </v-card>
     </div>
   </div>
@@ -102,6 +105,16 @@ export default Vue.extend({
   width: 350px;
   flex: 1 1 400px;
   border-radius: 5px;
+}
+.link {
+  margin: 15px;
+  color: white !important;
+
+  &__wrapper {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+  }
 }
 // .sign-main_form {
 //   margin-top: 40px;

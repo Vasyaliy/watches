@@ -40,7 +40,7 @@
             <span class="mobile__span"> Логотип </span>
           </div>
           <div class="mobile__nav">
-            <a class="mobile__link" @click="$router.push('/auth')"><img alt="auth" class="mobile__img" src="../assets/auth.png"></a>
+            <a class="mobile__link" @click="toMyList()"><img alt="auth" class="mobile__img" src="../assets/auth.png"></a>
             <Burger :notActive="true" @toggleBurger="openBar"/>
           </div>
         </div>
@@ -82,11 +82,20 @@
             FAQ
           </a>
           <a
+            v-if="!authorized"
             class="login"
-            @click="$router.push('/auth')"
+            @click="toMyList()"
             :class="$route.path.includes('/auth') ? 'active' : ''"
           >
             Вход/регистрация
+          </a>
+           <a
+            v-if="authorized"
+            class="login"
+            @click="toMyList()"
+            :class="$route.path.includes('/myList') ? 'active' : ''"
+          >
+            {{email}}
           </a>
         </div>
       </nav>
@@ -104,6 +113,7 @@ import host from '../Products/config'
 import router from '@/router'
 import Burger from './Burger.vue'
 import VBodyScrollLock from 'v-body-scroll-lock'
+import axios from 'axios'
 
 // import HomeContent from './HomeContent.vue'
 Vue.use(VBodyScrollLock)
@@ -115,6 +125,8 @@ export default Vue.extend({
   },
   data () {
     return {
+      username: '',
+      email: '',
       log: false,
       isPanelOpen: false,
       routes: [
@@ -143,14 +155,12 @@ export default Vue.extend({
     }
   },
   methods: {
+    toMyList () {
+      if (this.authorized) this.$router.push('/myList')
+      else this.$router.push('/auth')
+    },
     home () {
       if (this.$route.path !== '/') this.$router.push('/')
-    },
-    logout () {
-      // this.log = !this.log
-      deleteCookie('access_token')
-      this.$router.push('/')
-      location.reload()
     },
     openBar (data) {
       this.isPanelOpen = data
@@ -160,20 +170,20 @@ export default Vue.extend({
     }
   },
   mounted () {
-    // console.log('asd')
-    // console.log(getCookie('access_token') === null)
-    // axios.get(`${host}/api/v1/auth/users/me/`,
-    //   {
-    //     headers: {
-    //       Authorization: `token ${getCookie('access_token')}`
-    //     }
-    //   }
-    // )
-    //   .then((res) => {
-    //     this.username = res.data.username
-    //     this.email = res.data.email
-    //   })
-    //   .catch(console.log)
+    console.log('asd')
+    console.log(getCookie('access_token') === null)
+    axios.get(`${host}/api/v1/auth/users/me/`,
+      {
+        headers: {
+          Authorization: `token ${getCookie('access_token')}`
+        }
+      }
+    )
+      .then((res) => {
+        this.username = res.data.username
+        this.email = res.data.email
+      })
+      .catch(console.log)
   }
 })
 </script>
@@ -326,7 +336,7 @@ export default Vue.extend({
   padding: 15px;
   color: white;
 }
-@media screen and (max-width: 850px) {
+@media screen and (max-width: 1024px) {
   .nav {
     &__list {
       display: none;

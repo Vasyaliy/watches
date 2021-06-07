@@ -33,7 +33,7 @@ export class Products {
   loading: boolean
 
   constructor () {
-    this.list = productsMock
+    this.list = []
     this.currentProduct = undefined
     this.loading = false
   }
@@ -77,7 +77,7 @@ export class Products {
   fetchProducts = () => {
     this.loading = true
     axios
-      .get('http://localhost:8000/watch/api/product_get/')
+      .get(`${host}/watch/api/product_get/`)
       .catch(console.log)
       .then(response => {
         console.log(' i got it')

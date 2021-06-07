@@ -118,6 +118,7 @@
                   color="black"
                   style="margin-top: 20px;"
                   @click="postCharacteristic()"
+                  :loading="loading"
                 > Создать </v-btn>
             </div>
           </div>
@@ -143,7 +144,8 @@ export default Vue.extend({
       selectors: {},
       selectedFiles: [] as Array<any>,
       finalProduct: {},
-      errorMessage: false as boolean
+      errorMessage: false as boolean,
+      loading: false as boolean
     }
   },
   components: {
@@ -222,6 +224,7 @@ export default Vue.extend({
       }
     },
     postCharacteristic () {
+      this.loading = true
       axios
         .post(`${host}/product/create/`,
           this.product,
@@ -240,6 +243,9 @@ export default Vue.extend({
         .catch((error) => {
           console.log(error.response.request._response)
           this.errorMessage = true
+        })
+        .finally(() => {
+          this.loading = false
         })
     }
   }

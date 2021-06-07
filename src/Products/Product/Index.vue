@@ -172,6 +172,7 @@ export default Vue.extend({
     display: flex;
     flex-flow: row;
     margin: 20px;
+    justify-content: space-around;
   }
 }
 
@@ -179,6 +180,7 @@ export default Vue.extend({
   // border: solid 1px white;
   min-height: 380px;
   color: white;
+  margin-left: 16px;
   // margin: 0px 20px;
   // padding: 20px;
   display: flex;
@@ -198,7 +200,6 @@ export default Vue.extend({
     &__child {
       display: flex;
       flex-flow: wrap;
-      justify-content: center;
     }
   }
 }

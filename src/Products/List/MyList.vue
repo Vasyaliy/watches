@@ -50,30 +50,23 @@ export default Vue.extend({
   },
   mounted () {
     this.loading = true
-    axios.get(`${host}/api/v1/auth/users/me/`,
-      {
-        headers: {
-          Authorization: `token ${getCookie('access_token')}`
-        }
-      }
-    )
-      .then((res) => {
-        this.userId = res.data.id
-        console.log(this.userId)
-        axios
-          .get(`${host}/watch/api/product_get/?user=${this.userId}`)
-          .catch(console.log)
-          .then(response => {
-            // @ts-ignore
-            console.log(response.data)
-            // @ts-ignore
-            this.list = response.data
-          })
-          .finally(() => {
-            this.loading = false
-          })
-      }
-      )
+    axios
+      .get(`${host}/product/my_list`,
+        {
+          headers: {
+            Authorization: `token ${getCookie('access_token')}`
+          }
+        })
+      .catch(console.log)
+      .then(response => {
+        // @ts-ignore
+        console.log(response.data)
+        // @ts-ignore
+        this.list = response.data
+      })
+      .finally(() => {
+        this.loading = false
+      })
   },
   methods: {
     open (id: number) {

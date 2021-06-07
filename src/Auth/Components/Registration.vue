@@ -119,7 +119,7 @@ export default Vue.extend({
           .catch(console.log)
           .then(res => {
             console.log('sucses')
-            this.$emit('toAuth')
+            this.$router.push('./EmailVerification/confirming')
           })
       } else this.passwordValid = false
     }

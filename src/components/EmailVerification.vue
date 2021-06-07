@@ -5,6 +5,10 @@
         <h1 v-if="(id === 'expired')" class="golden-sign white-text">Время подтверждения истекло</h1>
         <h1 v-if="(id === 'error')" class="golden-sign white-text">Произошла ошибка</h1>
         <h1 v-if="(id === 'confirmed')" class="golden-sign white-text">Почта подтверждена</h1>
+        <div class="email-wrapper" v-if="(id === 'confirming')">
+          <h1 class="golden-sign white-text">Подтвердите почту</h1>
+          <span class="white-text mt-4">Мы выслали на вашу почту ссылку, перейдите по ней, чтобы подтвердить свой аккаунт</span>
+        </div>
         <v-btn v-if="(id === 'confirmed')" class="error-page__button" @click="$router.push('/auth')">Авторизация</v-btn>
         <v-btn v-else class="error-page__button" @click="$router.push('/')">Главная</v-btn>
       </div>
@@ -52,5 +56,13 @@ export default Vue.extend({
 }
 .error-page-wrapper {
   background-color: $primary-color;
+}
+
+.email-wrapper {
+  display: flex;
+  padding: 5px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 </style>

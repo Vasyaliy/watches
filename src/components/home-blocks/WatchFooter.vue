@@ -3,10 +3,10 @@
     <div class="margin watch-footer">
       <span class="logo">Логотип</span>
       <nav class="nav">
-        <a href="#" @click="$router.push('/list')" class="link">Купить часы</a>
-        <a href="#" @click="$router.push('/newProduct')" class="link">Продать часы</a>
+        <a @click="$router.push('/list')" class="link">Купить часы</a>
+        <a @click="$router.push('/newProduct')" class="link">Продать часы</a>
+        <a href="#" class="link">Мобильная версия</a>
         <a href="#faq" class="link">FAQ</a>
-        <a href="#" @click="$router.push('/defend')" class="link">Защита покупателей</a>
       </nav>
       <span class="watch-span">Все права защищены</span>
     </div>

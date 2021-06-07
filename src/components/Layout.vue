@@ -68,13 +68,6 @@
           </a>
           <a
             class="nav__item"
-            @click="$router.push('/defend')"
-            :class="$route.path.includes('/defend') ? 'active' : ''"
-          >
-            защита покупателей
-          </a>
-          <a
-            class="nav__item"
             href="#faq"
             @click="$router.push('/')"
             :class="$route.path.includes('/faq') ? 'active' : ''"
@@ -89,14 +82,37 @@
           >
             Вход/регистрация
           </a>
-           <a
+          <v-menu
             v-if="authorized"
-            class="login"
-            @click="toMyList()"
-            :class="$route.path.includes('/myList') ? 'active' : ''"
+            offset-y
           >
-            {{email}}
-          </a>
+            <template v-slot:activator="{ on, attrs }">
+              <a
+                class="login"
+                :class="$route.path.includes('/myList') ? 'active' : ''"
+                v-bind="attrs"
+                v-on="on"
+              >
+                {{email}}
+              </a>
+            </template>
+            <v-list dark>
+              <v-list-item
+                outlined
+                v-for="(item, index) in items"
+                :key="index"
+              >
+                <v-list-item-title>
+                  <v-btn
+                    @click="item.method"
+                    text
+                  >
+                    {{ item.title }}
+                  </v-btn>
+                </v-list-item-title>
+              </v-list-item>
+             </v-list>
+          </v-menu>
         </div>
       </nav>
         <router-view />
@@ -141,10 +157,18 @@ export default Vue.extend({
         {
           path: '/newProduct',
           title: 'Продать'
+        }
+      ],
+      items: [
+        {
+          title: 'Мои объявления',
+          // @ts-ignore
+          method: () => this.toMyList()
         },
         {
-          path: '/defend',
-          title: 'Защита'
+          title: 'Выйти из профиля',
+          // @ts-ignore
+          method: () => this.logout()
         }
       ]
     }
@@ -158,6 +182,12 @@ export default Vue.extend({
     toMyList () {
       if (this.authorized) this.$router.push('/myList')
       else this.$router.push('/auth')
+    },
+    async logout () {
+      // this.log = !this.log
+      deleteCookie('access_token')
+      await this.$router.push('/auth')
+      location.reload()
     },
     home () {
       if (this.$route.path !== '/') this.$router.push('/')

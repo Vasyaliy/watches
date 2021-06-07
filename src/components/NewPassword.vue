@@ -8,7 +8,6 @@
           v-model="valid"
           lazy-validation
         >
-        {{password}}
           <v-text-field
             v-model="password"
             :rules="passwordRules"

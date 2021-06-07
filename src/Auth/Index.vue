@@ -25,7 +25,11 @@
           </v-btn>
         </v-card-actions>
         <v-card-text>
-          <sign-in-form v-if="tab === 'auth'"></sign-in-form>
+          <sign-in-form
+            v-if="tab === 'auth'"
+            @to-registration="tab = 'registration'"
+            >
+            </sign-in-form>
           <registration
             v-if="tab === 'registration'"
             @toAuth="tab = 'auth'"
@@ -71,7 +75,7 @@ export default Vue.extend({
 })
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import url('/styles.app.scss');
 
 .auth-main {
